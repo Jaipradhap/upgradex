@@ -21,8 +21,15 @@ import {
   Menu,
   MenuItem,
   styled,
-  useTheme
+  useTheme,
+  Alert
 } from '@mui/material';
+import CardTravelIcon from '@mui/icons-material/CardTravel';
+import PaidIcon from '@mui/icons-material/Paid';
+import GroupIcon from '@mui/icons-material/Group';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import TextField from '@mui/material/TextField';
 import { formatDistance, subMonths, subDays } from 'date-fns';
 import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
 import Link from 'src/components/Link';
@@ -126,9 +133,16 @@ function TaskSearch() {
     }
   ];
 
-  const actionRef1 = useRef(null);
+  const amtRef = useRef(null);
+  const addressRef = useRef(null);
+  // const actionRef1 = useRef(null);
   const [openPeriod, setOpenMenuPeriod] = useState(false);
   const [period, setPeriod] = useState(periods[0].text);
+  const [errormsgg, setErrormsgg] = useState(null);
+
+  const sendValue = () => {
+    setErrormsgg(amtRef.current.value);
+}
 
   return (
     <>
@@ -158,7 +172,7 @@ function TaskSearch() {
       >
         <Box>
           <Typography variant="subtitle2">
-            Add Bucket Value Panel
+            User Dashboard
             <Text color="black">
               {/* <b>Panel</b> */}
             </Text>
@@ -219,14 +233,11 @@ function TaskSearch() {
             }}
           >
             <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="BTC"
-                  src="/static/images/placeholders/logo/bitcoin.png"
-                />
-              </AvatarWrapper>
+              <Box display="flex" alignItems="center" pl={0.3}>
+                <CardTravelIcon variant="outlined" fontSize="large" color="primary"/>
+              </Box>
               <Typography variant="h5" noWrap>
-                Bucket Value
+                Bucket Value Price
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 Matic
@@ -253,12 +264,9 @@ function TaskSearch() {
             }}
           >
             <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="Ripple"
-                  src="/static/images/placeholders/logo/ripple.png"
-                />
-              </AvatarWrapper>
+            <Box display="flex" alignItems="center" pl={0.3}>
+                <PaidIcon variant="outlined" fontSize="large" color="primary"/>
+              </Box>
               <Typography variant="h5" noWrap>
                 Withdrawn Amount
               </Typography>
@@ -287,12 +295,9 @@ function TaskSearch() {
             }}
           >
             <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="Cardano"
-                  src="/static/images/placeholders/logo/cardano.png"
-                />
-              </AvatarWrapper>
+            <Box display="flex" alignItems="center" pl={0.3}>
+                <GroupIcon variant="outlined" fontSize="large" color="primary"/>
+              </Box>
               <Typography variant="h5" noWrap>
                 Subordinates
               </Typography>
@@ -314,23 +319,6 @@ function TaskSearch() {
             </CardContent>
           </Card>
         </Grid>
-        {/* <Grid xs={12} sm={6} md={3} item>
-          <Tooltip arrow title="Click to add a new wallet">
-            <CardAddAction>
-              <CardActionArea
-                sx={{
-                  px: 1
-                }}
-              >
-                <CardContent>
-                  <AvatarAddWrapper>
-                    <AddTwoToneIcon fontSize="large" />
-                  </AvatarAddWrapper>
-                </CardContent>
-              </CardActionArea>
-            </CardAddAction>
-          </Tooltip>
-        </Grid> */}
       </Grid>
 
       <Box
@@ -350,12 +338,9 @@ function TaskSearch() {
             }}
           >
             <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="BTC"
-                  src="/static/images/placeholders/logo/bitcoin.png"
-                />
-              </AvatarWrapper>
+            <Box display="flex" alignItems="center" pl={0.3}>
+                <QueryStatsIcon variant="outlined" fontSize="large" color="primary"/>
+              </Box>
               <Typography variant="h5" noWrap>
                 Line Income
               </Typography>
@@ -384,12 +369,9 @@ function TaskSearch() {
             }}
           >
             <CardContent>
-              <AvatarWrapper>
-                <img
-                  alt="Ripple"
-                  src="/static/images/placeholders/logo/ripple.png"
-                />
-              </AvatarWrapper>
+            <Box display="flex" alignItems="center" pl={0.3}>
+                <AccountBalanceWalletIcon variant="outlined" fontSize="large" color="primary"/>
+              </Box>
               <Typography variant="h5" noWrap>
                 Redeem Balance
               </Typography>
@@ -404,9 +386,10 @@ function TaskSearch() {
                 <Typography variant="h3" gutterBottom noWrap>
                   586.83 Matic
                 </Typography>
-                <Typography variant="subtitle2" noWrap>
+                {/* <Typography variant="subtitle2" noWrap>
                   Redeem
-                </Typography>
+                </Typography> */}
+                <Button variant="outlined" size="small" color="primary" >Redeem</Button>
               </Box>
             </CardContent>
           </Card>
@@ -446,7 +429,7 @@ function TaskSearch() {
           </Card>
         </Grid> */}
         <Grid xs={12} sm={6} md={3} item>
-          <Tooltip arrow title="Click to add 10 MATIC">
+          <Tooltip arrow title="Add Your Bucket Value Price">
             <CardAddAction>
               <CardActionArea
                 sx={{
@@ -454,9 +437,43 @@ function TaskSearch() {
                 }}
               >
                 <CardContent>
-                  <AvatarAddWrapper>
-                    <AddTwoToneIcon fontSize="large" />
-                  </AvatarAddWrapper>
+
+                <TextField
+                      required
+                      id="outlined-required"
+                      label="Matic Amount"
+                      defaultValue="10"
+                      inputRef={amtRef}
+                      type="number"
+                    />
+
+                <Box
+                sx={{
+                  pt: 1.5
+                }}
+              ></Box>
+
+                    <TextField
+                      required
+                      id="outlined-required"
+                      label="Sponsor Address"
+                      defaultValue="0x"
+                      inputRef={addressRef}
+                      inputProps={{ maxLength: 25 }}
+                    />
+
+
+                <Box
+                sx={{
+                  pt: 2
+                }}
+              >
+
+                <Button variant="outlined" size="small" color="primary" onClick={sendValue} >Lock</Button> {' '}
+                <Button variant="contained" size="small" color="primary" disabled>Add Price</Button>
+                </Box>
+                {errormsgg && (<Button  size="small"  variant="outlined" color="error" >{errormsgg}</Button>)}
+                {/* <Button variant="outlined" color="error" >Error Msg</Button> */}
                 </CardContent>
               </CardActionArea>
             </CardAddAction>

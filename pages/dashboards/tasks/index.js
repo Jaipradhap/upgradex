@@ -179,7 +179,7 @@ function DashboardTasks() {
                 </Grid>
                 <Grid item xs={12}>
                   <Box p={4}>
-                    <Projects />
+                    {/* <Projects /> */}
                   </Box>
                   <Divider />
                 </Grid>
@@ -197,12 +197,12 @@ function DashboardTasks() {
                             background: `${theme.colors.alpha.white[70]}`
                           }}
                         >
-                          <Checklist />
+                          {/* <Checklist /> */}
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <Box p={4}>
-                          <Profile />
+                          {/* <Profile /> */}
                         </Box>
                       </Grid>
                     </Grid>

@@ -7,10 +7,8 @@ import {
   Avatar,
   styled
 } from '@mui/material';
-// import DocumentScannerTwoToneIcon from '@mui/icons-material/DocumentScannerTwoTone';
-import AddAlertTwoToneIcon from '@mui/icons-material/AddAlertTwoTone';
+import { useState } from 'react';
 import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
-// import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 
 const AvatarPageTitle = styled(Avatar)(
@@ -37,11 +35,9 @@ const AvatarPageTitle = styled(Avatar)(
 `
 );
 
-function PageHeader() {
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg'
-  };
+function PageHeader(props) {
+
+  const { isConnected, accounts, errormsg , onConnect, onDisconnect } = props;
 
   return (
     <Box
@@ -55,18 +51,40 @@ function PageHeader() {
           <AllInclusiveIcon fontSize="large" />
         </AvatarPageTitle>
         <Box>
+        {isConnected && (
+          <Typography variant="h3" component="h3" gutterBottom>
+            Welcome {accounts.substr(0, 5)}...{accounts.substr(accounts.length - 4, accounts.length - 1)}
+          </Typography> )}
+          
+          {!isConnected && (
           <Typography variant="h3" component="h3" gutterBottom>
             Welcome 
-          </Typography>
+          </Typography> )}
+          
+
           <Typography variant="subtitle2">
             Manage your crypto and grow! Enjoy a well built system on polygon blockchain.
           </Typography>
         </Box>
       </Box>
+
       <Box mt={{ xs: 3, md: 0 }}>
-        <Button variant="contained" startIcon={<AccountBalanceWalletOutlinedIcon />}>
+      {errormsg && (<Button variant="outlined" color="error" >{errormsg}</Button>)}
+        
+        {!isConnected && (
+        <Button variant="contained" startIcon={<AccountBalanceWalletOutlinedIcon />}
+          onClick={onConnect}
+          >
           Connect Wallet
-        </Button>
+        </Button> )}
+
+        {isConnected && (
+        <Button variant="outlined" 
+          onClick={onDisconnect}
+          >
+          {accounts.substr(0, 5)}...{accounts.substr(accounts.length - 4, accounts.length - 1)}
+        </Button> )}
+
       </Box>
     </Box>
   );

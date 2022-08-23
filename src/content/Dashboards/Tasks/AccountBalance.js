@@ -139,7 +139,7 @@ function AccountBalance() {
               }}
               variant="h4"
             >
-              Bucket Base Value
+              Bucket Base Price
             </Typography>
             <Box>
               <Typography variant="h1" gutterBottom>
@@ -176,16 +176,7 @@ function AccountBalance() {
               </Box>
             </Box>
             <Grid container spacing={3}>
-              {/* <Grid sm item>
-                <Button fullWidth variant="outlined">
-                  Send
-                </Button>
-              </Grid>
-              <Grid sm item>
-                <Button fullWidth variant="contained">
-                  Receive
-                </Button>
-              </Grid> */}
+       
             </Grid>
           </Box>
         </Grid>
@@ -218,7 +209,7 @@ function AccountBalance() {
                 alignItems="center"
               >
                 <Chart
-                  height={250}
+                  height={200}
                   options={chartOptions}
                   series={chartSeries}
                   type="donut"
