@@ -8,14 +8,14 @@ function HeaderButtons() {
     <Box sx={{ mr: 1 }}>
       {/* <HeaderSearch /> */}
       <Tooltip arrow placement="top" title="Instagram">
-                    <IconButton color="primary">
-                      <InstagramIcon onClick={event =>  window.open('https://www.instagram.com/rabbiteggsdefi')}/>
+                    <IconButton color="primary" onClick={event =>  window.open('https://www.instagram.com/rabbiteggsdefi')}>
+                      <InstagramIcon />
                     </IconButton>
                   </Tooltip>
 
-      <Tooltip arrow placement="top" title="Twitter">
-                  <IconButton color="primary">
-                    <TwitterIcon onClick={event =>  window.open('https://twitter.com/DefiEggs')} />
+      <Tooltip arrow placement="top" title="Twitter" >
+                  <IconButton color="primary" onClick={event =>  window.open('https://twitter.com/DefiEggs')}>
+                    <TwitterIcon />
                   </IconButton>
                 </Tooltip>
 
