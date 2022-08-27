@@ -251,9 +251,6 @@ function DashboardTasks() {
         <PageHeader 
                     isConnected={isConnected}
                     accounts={accounts}
-                    errormsg={errormsg}
-                    onConnect={onConnect}
-                    onDisconnect={onDisconnect}
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -340,7 +337,14 @@ function DashboardTasks() {
             {currentTab === 'taskSearch' && (
               <Grid item xs={12}>
                 <Box p={4}>
-                  <TaskSearch />
+                  <TaskSearch 
+                   isConnected={isConnected}
+                   accounts={accounts}
+                   web3={web3}
+                   errormsgw={errormsg}
+                   onConnect={onConnect}
+                   onDisconnect={onDisconnect}
+                  />
                 </Box>
               </Grid>
             )}

@@ -68,7 +68,7 @@ function TeamOverview() {
           pb: 3
         }}
       >
-        <Typography variant="h4">DEX Distribution Concept which works on 20-20 upline and downline model.</Typography>
+        <Typography variant="h4">DEX Distribution Concept which works on 25-20 upline and downline model.</Typography>
 
       </Box>
     <Grid container spacing={4}>
@@ -119,7 +119,7 @@ function TeamOverview() {
           </Box> */}
 
           <Typography variant="subtitle2" gutterBottom>
-            <Text color="black">Each Buy,</Text> share ratio is 70:20:10<Text color="black">20 upline , 20 downline and a referral bonus</Text>{' '}
+            <Text color="black">Each Buy,</Text> share ratio is 70:20:10<Text color="black">25 upline , 20 downline and a referral bonus</Text>{' '}
             
           </Typography>
           <LinearProgressWrapper

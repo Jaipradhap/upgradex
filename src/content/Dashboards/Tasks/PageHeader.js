@@ -37,7 +37,7 @@ const AvatarPageTitle = styled(Avatar)(
 
 function PageHeader(props) {
 
-  const { isConnected, accounts, errormsg , onConnect, onDisconnect } = props;
+  const { isConnected, accounts } = props;
 
   return (
     <Box
@@ -63,12 +63,12 @@ function PageHeader(props) {
           
 
           <Typography variant="subtitle2">
-            Manage your crypto and grow! Enjoy a well built system on polygon blockchain.
+            Manage your crypto and grow it! Enjoy a well built system on polygon blockchain.
           </Typography>
         </Box>
       </Box>
 
-      <Box mt={{ xs: 3, md: 0 }}>
+      {/* <Box mt={{ xs: 3, md: 0 }}>
       {errormsg && (<Button variant="outlined" color="error" >{errormsg}</Button>)}
         
         {!isConnected && (
@@ -85,7 +85,7 @@ function PageHeader(props) {
           {accounts.substr(0, 5)}...{accounts.substr(accounts.length - 4, accounts.length - 1)}
         </Button> )}
 
-      </Box>
+      </Box> */}
     </Box>
   );
 }

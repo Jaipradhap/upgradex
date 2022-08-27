@@ -139,7 +139,7 @@ function AccountBalance() {
               }}
               variant="h4"
             >
-              Bucket Base Price
+              Value Pack Base Price
             </Typography>
             <Box>
               <Typography variant="h1" gutterBottom>
@@ -150,7 +150,7 @@ function AccountBalance() {
                 fontWeight="normal"
                 color="text.secondary"
               >
-                Check Market Price for Equivalent USD
+                Distribute 70% to 25 Upline and 20% to 20 Downline Users
               </Typography>
               <Box
                 display="flex"
@@ -243,7 +243,7 @@ function AccountBalance() {
                       <Typography align="right" variant="h4" noWrap>
                         70%
                       </Typography>
-                      <Text color="success">20</Text>
+                      <Text color="success">25</Text>
                     </Box>
                   </ListItem>
                   <ListItem disableGutters>
@@ -279,9 +279,9 @@ function AccountBalance() {
                       <AccountCircleTwoToneIcon/>
                     </ListItemAvatarWrapper>
                     <ListItemText
-                      primary="Referral"
+                      primary="Sponsor"
                       primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="User"
+                      secondary="Bonus"
                       secondaryTypographyProps={{
                         variant: 'subtitle2',
                         noWrap: true
