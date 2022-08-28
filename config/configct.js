@@ -1,12 +1,16 @@
-export const CONTADDRESS = '0x4858C97e7cCe207Af7C3CAe03D66A1A2956cC0Ab'; // Contract Address
-export const TOKENADDRESS = '0x24A965E1EAd7EEE2C72485B9Ba747f4E73E0041F'; // FASTX Token
-export const TXNURL = 'https://polygonscan.com/tx/';
+export const CONTADDRESS = '0x4Be25b76C136D02E971E8c9c08520865c158438e'; // Contract Address
+export const TOKENADDRESS = '0x28F849a7800a5BD3f6416Dd13C0AcCaCDC7Cf840'; // FASTX Token
+// export const TXNURL = 'https://polygonscan.com/tx/';
+export const TXNURL = 'https://mumbai.polygonscan.com/tx/';
 export const REFURL = 'http://localhost:3000/?ref=';
 
 
 //Smart Contract Links
-export const DSTATECT = 'https://polygonscan.com/address/'.concat(CONTADDRESS);
+// export const DSTATECT = 'https://polygonscan.com/address/'.concat(CONTADDRESS);
 // export const TOKENCT = 'https://polygonscan.com/address/'.concat(TOKENADDRESS);
+export const DSTATECT = 'https://mumbai.polygonscan.com/address/'.concat(CONTADDRESS);
+export const TOKENCT = 'https://mumbai.polygonscan.com/address/'.concat(TOKENADDRESS);
+
 
 
 // Urls

@@ -183,7 +183,7 @@ function DashboardTasks() {
             method: "wallet_addEthereumChain",
             params: [
               {
-                ...networks['polygon']
+                ...networks['polygontest']
               }
             ]
           });
@@ -191,7 +191,7 @@ function DashboardTasks() {
           try {
             await ethereum.request({
               method: 'wallet_switchEthereumChain',
-              params: [{  chainId: `0x${Number(137).toString(16)}` }],
+              params: [{  chainId: `0x${Number(80001).toString(16)}` }],
             });
           } catch (switchError) {
             if (switchError.code === 4902) {
@@ -200,7 +200,7 @@ function DashboardTasks() {
                   method: 'wallet_addEthereumChain',
                   params: [
                     {
-                      ...networks['polygon']
+                      ...networks['polygontest']
                     },
                   ],
                 });

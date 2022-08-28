@@ -150,7 +150,10 @@ function TaskSearch(props) {
   
   const [totalUsers, setTotalUsers] = useState(10);
   const [totalWithdraws, setTotalWithdraws] = useState(null);
-  
+
+  const [subordinatesp, setSubordinatesp] = useState(0);
+  const [levelnumberp, setLevelnumberp] = useState(0);
+ 
 
   const copyRefLink = async () => {
     if(isConnected) {
@@ -187,6 +190,7 @@ function TaskSearch(props) {
     let errflag =0;
     let amt = parseInt(amtRef.current.value); 
     let ads = addressRef.current.value;  // isAddress > accounts != ads > check childs > 20
+    ads = ads.trim();
     
     const isaddress = AddressChk(ads);
  
@@ -384,7 +388,7 @@ const callBuy = async (sponaddress,buyprice) => {
   
 }
   } catch (error) {
-    setErrormsgg("Please reload or close browser and try again!");
+    setErrormsgg("Please try again later!");
     // notify("info","Please try again! To know the steps ", GUIDE);
 
   }
@@ -420,6 +424,41 @@ const callwithdraw = async () => {
       setLoadingd(false);
   } catch (error) {
     setLoading(false);
+
+  }
+}; 
+
+// Admin
+
+const callAdmin = async () => {
+  try {
+    const isaddress = AddressChk(sponaddress.trim());
+    if(accounts && isaddress) {
+      setLoadings(true);
+    const instance = new web3.eth.Contract(
+      SimpleStorageContract.abi,
+      ContractAddress
+    );
+
+      if(!instance) {
+      }
+      else {
+        await instance.methods.getDashBoard(sponaddress.trim()).call(
+          function (err, res) {
+            if (err) {
+              setLoadings(false);
+            } else {
+              setSubordinatesp(res[2]);
+              setLevelnumberp(res[3]);
+              setLoadings(false);
+            }
+          }
+        );
+      }
+      }
+      setLoadings(false);
+  } catch (error) {
+    setLoadings(false);
 
   }
 }; 
@@ -794,9 +833,11 @@ const callwithdraw = async () => {
                       onChange={(e) => setSponaddress(e.target.value)}
                     />
 
-              {/* <Typography variant="subtitle2" noWrap>
-                  check sponsor health and buy
-                </Typography> */}
+              <Box
+                sx={{
+                  pt: 1
+                }}
+              ></Box>
 
             <Typography
               sx={{
@@ -830,12 +871,12 @@ const callwithdraw = async () => {
               </Box> */}
                 <Box
                 sx={{
-                  pt: 3
+                  pt: 2
                 }}
               >
 
               {isConnected && (
-                <Tooltip arrow title="Check Sponsor downline before buy"><span>
+                <Tooltip arrow title="Choose Sponsor with 1 - 20 downline"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={sendValue} 
                 disabled={loading}
                 >Buy Pack</Button> </span></Tooltip> 
@@ -846,7 +887,7 @@ const callwithdraw = async () => {
               )}
 
               {!isConnected && (
-                <Tooltip arrow title="Please Connect Wallet to enable"><span>
+                <Tooltip arrow title="Please Connect Wallet"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={sendValue} disabled>Buy Pack</Button> 
                 </span></Tooltip>              )}
                 </Box>
@@ -902,7 +943,7 @@ const callwithdraw = async () => {
                 Level (upline users)
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                2
+                {levelnumberp}
               </Typography>
 
                 <Box
@@ -917,7 +958,7 @@ const callwithdraw = async () => {
                 Downline Users
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                12
+                {subordinatesp}
               </Typography>
 
               <Box  
@@ -936,8 +977,8 @@ const callwithdraw = async () => {
               >
 
               {isConnected && (
-                <Tooltip arrow title="Check Sponsor Level before buy"><span>
-                <Button variant="outlined" size="small" color="primary" onClick={sendValue} 
+                <Tooltip arrow title="Choose Sponsor with 1 - 20 downline"><span>
+                <Button variant="outlined" size="small" color="primary" onClick={callAdmin} 
                 disabled={loadings}
                 >Check Health</Button> </span></Tooltip> 
               )}
@@ -947,8 +988,8 @@ const callwithdraw = async () => {
               )}
 
               {!isConnected && (
-                <Tooltip arrow title="Please Connect Wallet to enable"><span>
-                <Button variant="outlined" size="small" color="primary" onClick={sendValue} disabled>Check Health</Button> 
+                <Tooltip arrow title="Please Connect Wallet"><span>
+                <Button variant="outlined" size="small" color="primary" onClick={callAdmin} disabled>Check Health</Button> 
                 </span></Tooltip>              )}
                 </Box>
               
