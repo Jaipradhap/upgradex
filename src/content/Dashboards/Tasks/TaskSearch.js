@@ -21,8 +21,7 @@ import {
   Menu,
   MenuItem,
   styled,
-  useTheme,
-  Alert
+  useTheme
 } from '@mui/material';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -33,10 +32,10 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import TextField from '@mui/material/TextField';
-import { formatDistance, subMonths, subDays } from 'date-fns';
-import TodayTwoToneIcon from '@mui/icons-material/TodayTwoTone';
-import Link from 'src/components/Link';
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Text from 'src/components/Text';
 import Web3 from "web3";
 
@@ -114,7 +113,7 @@ const CardAddAction = styled(Card)(
 
 function TaskSearch(props) {
   const theme = useTheme();
-  const { isConnected, accounts, web3, errormsgw , onConnect, onDisconnect } = props;
+  const { isConnected, accounts, web3, errormsgw , onConnect, onDisconnect, refid } = props;
   const ContractAddress = CONTADDRESS;
   const handleDelete = () => {};
 
@@ -161,7 +160,7 @@ function TaskSearch(props) {
   const [parent, setParent] = useState(' ');
   
   const [sponaddress, setSponaddress] = useState(' ');
-  
+  const [rate, setRate] = useState(4);
   
 
   const onConnectChild = async () => { 
@@ -169,6 +168,7 @@ function TaskSearch(props) {
     setLoadingw(true); 
     await props.onConnect(); 
     setLoadingw(false);
+    if (refid != undefined && refid.length > 0) {   setSponaddress(refid); }
     }
     catch(err){
       setLoadingw(false);
@@ -290,7 +290,13 @@ const getUserDetails = async () => {
             // let {pkgvalue, withdrawnbal,subordinates,levelnumber,balance,refbouns,parent}  = res;
              // setWarnmsgg("Sponsor has 20 downline users already.Please check Sponsor Finder");
              setPkgvalue(res[0]);
-
+             let val = res[0];
+              if (val >=10 && val <=50) { setRate(1); }
+              else if (val >=51 && val <=100) { setRate(2); }
+              else if (val >=101 && val <=200) { setRate(3); }
+              else if (val >=201 && val <=400) { setRate(4); }
+              else if (val >=401 ) { setRate(5); }
+              else { setRate(1); }
             
              setWithdrawnbal(Number.parseFloat(Web3.utils.fromWei(res[1],'ether')).toFixed(1)); // Web3.utils.fromWei(res[1],'ether')
              
@@ -444,53 +450,10 @@ const callwithdraw = async () => {
         </Button> )}
 
       </Box>
+       
 
-        {/* <Box display="flex" alignItems="center">
-          <Typography
-            variant="subtitle2"
-            sx={{
-              pr: 1
-            }}
-          >
-            Sort by:
-          </Typography>
-          <Button
-            size="small"
-            variant="outlined"
-            ref={actionRef1}
-            onClick={() => setOpenMenuPeriod(true)}
-            endIcon={<ExpandMoreTwoToneIcon fontSize="small" />}
-          >
-            {period}
-          </Button>
-          <Menu
-            disableScrollLock
-            anchorEl={actionRef1.current}
-            onClose={() => setOpenMenuPeriod(false)}
-            open={openPeriod}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right'
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-          >
-            {periods.map((_period) => (
-              <MenuItem
-                key={_period.value}
-                onClick={() => {
-                  setPeriod(_period.text);
-                  setOpenMenuPeriod(false);
-                }}
-              >
-                {_period.text}
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box> */}
       </Box>
+
  {/* row -1 */}
       <Grid container spacing={3}>
         <Grid xs={12} sm={6} md={3} item>
@@ -517,9 +480,9 @@ const callwithdraw = async () => {
                 <Typography variant="h3" gutterBottom noWrap>
                   {pkgvalue} Matic
                 </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  $1.25843
-                </Typography>
+                <Box>
+                    <Rating value={rate} defaultValue={5} precision={1} size="small" readOnly />
+                </Box>
               </Box>
             </CardContent>
           </Card>
@@ -648,16 +611,10 @@ const callwithdraw = async () => {
 
               <Box
                 sx={{
-                  pt: 1
+                  pt: 6
                 }}
               >
 
-            <Typography variant="h5" noWrap>
-                Total Value Pack
-              </Typography>
-              <Typography variant="subtitle1" noWrap>
-                100000000
-              </Typography>
 
                 </Box>
 
@@ -684,9 +641,18 @@ const callwithdraw = async () => {
                 <Typography variant="h5" gutterBottom noWrap>
                 Referral Link
                 </Typography>
-                <Typography variant="subtitle2" noWrap>
-                  https://fastxmatic.com?ref=0xC5AD7CE
-                </Typography>
+
+                <Chip
+                sx={{
+                  mr: 0.5
+                }}
+                variant="outlined"
+                size="small"
+                label="Copy Ref Link"
+                color="primary"
+                onClick={handleDelete}
+                onDelete={handleDelete}
+              />
               </Box>
             </CardContent>
           </Card>
@@ -784,17 +750,29 @@ const callwithdraw = async () => {
                       onChange={(e) => setSponaddress(e.target.value)}
                     />
 
-              <Typography variant="subtitle2" noWrap>
+              {/* <Typography variant="subtitle2" noWrap>
                   check sponsor health and buy
-                </Typography>
-                <Box  
+                </Typography> */}
+
+            {/* <Typography
+              sx={{
+                pb: 1
+              }}
+              color="text.secondary"
+              size="small" 
+            >
+              If Sponsor has 20 downline users,then you miss downline income.
+            </Typography> */}
+
+
+                {/* <Box  
                 sx={{
-                  pt: 4
+                  pt: 1
                   
                 }}
               > 
-                      {/* <Button variant="outlined" size="small" color="primary" >Sponsor's Health Check</Button>  */}
-              </Box>
+                     
+              </Box> */}
                 <Box
                 sx={{
                   pt: 2
@@ -876,7 +854,7 @@ const callwithdraw = async () => {
 
 
               <Typography variant="h5" noWrap>
-                Subordinates
+                Downline Users
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 12
@@ -926,26 +904,34 @@ const callwithdraw = async () => {
         
       </Grid>
 
-
-      {/* <Box
-        sx={{
-          pt: 4
-        }}
+      <Box
+        py={2}
         display="flex"
         alignItems="center"
-        justifyContent="center"
-      >
-        <Pagination
-          showFirstButton
-          showLastButton
-          count={15}
-          defaultPage={6}
-          siblingCount={0}
-          size="large"
-          shape="rounded"
-          color="primary"
-        />
-      </Box> */}
+        justifyContent="space-between"
+      ></Box>
+
+      <Divider />
+      <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Please read the tips before buying the value pack</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Suspendisse malesuada lacus ex, sit amet blandit leo
+                      lobortis eget.
+                      {/* {refad} */}
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+
+
+
     </>
   );
 }

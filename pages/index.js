@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import PageHeader from 'src/content/Dashboards/Tasks/PageHeader';
 import Footer from 'src/components/Footer';
 import {
@@ -110,6 +111,9 @@ const TabsContainerWrapper = styled(Box)(
 
 function DashboardTasks() {
   const theme = useTheme();
+
+  const router = useRouter();
+  var refid = router.query["ref"];
 
   const [web3, setWeb3] = useState(null);
   const [accounts, setAccounts] = useState(null);
@@ -344,6 +348,7 @@ function DashboardTasks() {
                    errormsgw={errormsg}
                    onConnect={onConnect}
                    onDisconnect={onDisconnect}
+                   refid = {refid}
                   />
                 </Box>
               </Grid>
