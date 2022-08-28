@@ -194,7 +194,8 @@ function TaskSearch(props) {
     
     const isaddress = AddressChk(ads);
  
-    if (!(amt >= 10 && amt <= 500)) {
+        // if (!(amt >= 10 && amt <= 500)) {
+    if (!(amt >= 1 && amt <= 500)) {
       errflag =1;
       setErrormsgg("Each Buy,Min Price: 10 & Max Price: 500");
     }
