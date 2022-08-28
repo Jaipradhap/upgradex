@@ -40,37 +40,6 @@
           "type": "uint256"
         }
       ],
-      "name": "BuyAgain",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "mini70",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "mini20",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "mini10",
-          "type": "uint256"
-        }
-      ],
       "name": "BuyEvent",
       "type": "event"
     },
@@ -384,6 +353,20 @@
     },
     {
       "inputs": [],
+      "name": "getFASTXBal",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
       "name": "getCTBal",
       "outputs": [
         {
@@ -428,6 +411,30 @@
       "inputs": [],
       "name": "getTotalPack",
       "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getTotalVP",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
         {
           "internalType": "uint256",
           "name": "",
@@ -492,7 +499,7 @@
           "type": "address"
         }
       ],
-      "name": "BuyCart",
+      "name": "BuyPack",
       "outputs": [],
       "stateMutability": "payable",
       "type": "function",

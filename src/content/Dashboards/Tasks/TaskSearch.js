@@ -40,7 +40,7 @@ import Text from 'src/components/Text';
 import Web3 from "web3";
 
 import SimpleStorageContract from "config/BasicContractFXMflat.json";
-import { CONTADDRESS,TXNURL } from 'config/configct';
+import { CONTADDRESS,TXNURL,TOKENADDRESS,REFURL } from 'config/configct';
 
 const OutlinedInputWrapper = styled(OutlinedInput)(
   ({ theme }) => `
@@ -115,32 +115,10 @@ function TaskSearch(props) {
   const theme = useTheme();
   const { isConnected, accounts, web3, errormsgw , onConnect, onDisconnect, refid } = props;
   const ContractAddress = CONTADDRESS;
-  const handleDelete = () => {};
-
-  
-
+   
   const AddressChk = (address) => {
      return Web3.utils.isAddress(address);
     }
-
-  const periods = [
-    {
-      value: 'popular',
-      text: 'Most popular'
-    },
-    {
-      value: 'recent',
-      text: 'Recent tasks'
-    },
-    {
-      value: 'updated',
-      text: 'Latest updated tasks'
-    },
-    {
-      value: 'oldest',
-      text: 'Oldest tasks first'
-    }
-  ];
 
   const amtRef = useRef(null);
   const addressRef = useRef(null);
@@ -148,6 +126,11 @@ function TaskSearch(props) {
   const [warnmsgg, setWarnmsgg] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadingw, setLoadingw] = useState(false);
+  const [loadingr, setLoadingr] = useState(false);
+  const [loadingd, setLoadingd] = useState(false);
+  const [loadings, setLoadings] = useState(false);
+  const [trnrecepitb, setTrnrecepitb] = useState(null);
+  const [trnrecepitw, setTrnrecepitw] = useState(null);
   // DashBoard
   const [newUser, setNewUser] = useState(false);
   const [pkgvalue, setPkgvalue] = useState(0);
@@ -155,13 +138,36 @@ function TaskSearch(props) {
   const [subordinates, setSubordinates] = useState(0);
   const [levelnumber, setLevelnumber] = useState(0);
   const [balance, setBalance] = useState(null); // wei to ether
-  const [xbalance, setXbalance] = useState(null); // wei to ether
+  // const [xbalance, setXbalance] = useState(null); // wei to ether
   const [refbouns, setRefbouns] = useState(null); // wei to ether
   const [parent, setParent] = useState(' ');
   
   const [sponaddress, setSponaddress] = useState(' ');
   const [rate, setRate] = useState(4);
+  const [copyTokens, setCopyTokens] = useState('Copy Token');
+  const [copyRef, setCopyRef] = useState('Copy Ref Link');
+ 
   
+  const [totalUsers, setTotalUsers] = useState(10);
+  const [totalWithdraws, setTotalWithdraws] = useState(null);
+  
+
+  const copyRefLink = async () => {
+    if(isConnected) {
+    navigator.clipboard.writeText(REFURL.concat(accounts));
+    setCopyRef('Copied!');
+    }
+   }
+
+
+  const copyToken = async () => {
+    navigator.clipboard.writeText(TOKENADDRESS);
+    setCopyTokens('Copied!');
+   }
+
+  const openScan = async (val) => {
+    window.open(TXNURL + val, '_blank').focus();
+   }
 
   const onConnectChild = async () => { 
     try {
@@ -262,10 +268,8 @@ function TaskSearch(props) {
 
 const getUserDetails = async () => {
   try {
-    // console.log('In getUserDetails');
     if(accounts) {
-      console.log(accounts);
-    // let totalamt = buyprice.toString();
+      setLoadingr(true);
 
     const instance = new web3.eth.Contract(
       SimpleStorageContract.abi,
@@ -276,19 +280,30 @@ const getUserDetails = async () => {
       }
       else {
 
+                // getTotals
+
+        await instance.methods.getTotalVP().call(
+          function (err, res) {
+            if (err) {
+              setLoadingr(false);
+            } else {
+              setTotalUsers(res[0]);
+              setTotalWithdraws(Web3.utils.fromWei(res[1],'ether'));
+            }
+          }
+        );
+
         let isNewUser = await instance.methods.checkUser(accounts).call();
         console.log(isNewUser);
         setNewUser(!isNewUser);
 
-        if (!isNewUser) { return; }
+        if (!isNewUser) { setLoadingr(false); return; }
 
         await instance.methods.getDashBoard(accounts).call(
           function (err, res) {
             if (err) {
+              setLoadingr(false);
             }else {
-            // console.log(res);
-            // let {pkgvalue, withdrawnbal,subordinates,levelnumber,balance,refbouns,parent}  = res;
-             // setWarnmsgg("Sponsor has 20 downline users already.Please check Sponsor Finder");
              setPkgvalue(res[0]);
              let val = res[0];
               if (val >=10 && val <=50) { setRate(1); }
@@ -303,25 +318,31 @@ const getUserDetails = async () => {
              setSubordinates(res[2]);
              setLevelnumber(res[3]);
              
-             setXbalance(Web3.utils.fromWei(res[4],'ether'));
+            //  setXbalance(Web3.utils.fromWei(res[4],'ether'));
              setBalance(Number.parseFloat(Web3.utils.fromWei(res[4],'ether')).toFixed(1));
              setRefbouns(Number.parseFloat(Web3.utils.fromWei(res[5],'ether')).toFixed(1));
              
              setParent(res[6]);
+             setSponaddress(res[6]);
+             setLoadingr(false);
             }
           }
         );
       }
 
       } else
-      {
-      }
+      {   }
+
+     setLoadingr(false);
   } catch (error) {
     console.log(error);
-    // notify("info","Please try again! To know the steps ", GUIDE);
-
+    setLoadingr(false);
   }
 }; 
+
+// 2.GetSponsorDetails
+
+// 3.GetTotals
 
 
 // 4.callBuy
@@ -343,16 +364,15 @@ const callBuy = async (sponaddress,buyprice) => {
     );
 
       if(!instance) {
-        // notify("info","Please try again! To know about tips and tricks ", TIPS);
       }
       else {
-    await instance.methods.BuyCart(sponaddress).send({ from: accounts , value: Web3.utils.toWei(totalamt, 'ether')}, 
+    await instance.methods.BuyPack(sponaddress).send({ from: accounts , value: Web3.utils.toWei(totalamt, 'ether')}, 
     function(error, transactionHash){
       if (error) {
-        console.log(error);
+        // console.log(error);
         // notify("info","Please try again! To know the steps ", GUIDE);
       } else {
-        console.log(transactionHash);
+        setTrnrecepitb(transactionHash);
         // notify("success", "Please find the receipt  " , TXNURL + transactionHash);
         // notify("info","Minting is the fuel,Please encourage others", TIPS);
       
@@ -364,7 +384,7 @@ const callBuy = async (sponaddress,buyprice) => {
   
 }
   } catch (error) {
-    console.log(error);
+    setErrormsgg("Please reload or close browser and try again!");
     // notify("info","Please try again! To know the steps ", GUIDE);
 
   }
@@ -375,7 +395,7 @@ const callBuy = async (sponaddress,buyprice) => {
 const callwithdraw = async () => {
   try {
     if(accounts) {
-      setLoading(true);
+      setLoadingd(true);
     const instance = new web3.eth.Contract(
       SimpleStorageContract.abi,
       ContractAddress
@@ -388,18 +408,17 @@ const callwithdraw = async () => {
         await instance.methods.WithdrawToken().send({ from: accounts }, 
           function(error, transactionHash){
             if (error) {
-              
+              setLoadingd(false);
             } else {
-              setLoading(false);
+              setLoadingd(false);
               // notify("success", "Please find redeem receipt  " , TXNURL + transactionHash);
-              console.log(transactionHash);
+              setTrnrecepitw(transactionHash);
             }
         });      }
 
       }
-      setLoading(false);
+      setLoadingd(false);
   } catch (error) {
-    console.log(error);
     setLoading(false);
 
   }
@@ -426,7 +445,7 @@ const callwithdraw = async () => {
 
         <Box mt={{ xs: 2, md: 0 }}>
       
-        {isConnected && (<Button variant="outlined" color="primary" onClick={getUserDetails}>Refresh Board</Button>)} {' '}
+        {isConnected && (<Button variant="outlined" color="primary" onClick={getUserDetails} disabled={loadingr}>Refresh Board</Button>)} {' '}
 
       {errormsgw && (<Button variant="outlined" color="error" >{errormsgw}</Button>)} {' '}
         
@@ -463,8 +482,9 @@ const callwithdraw = async () => {
             }}
           >
             <CardContent>
-              <Box display="flex" alignItems="center" pl={0.3}>
+              <Box display="flex" alignItems="center" pl={0.3} justifyContent="space-between">
                 <CardTravelIcon variant="outlined" fontSize="large" color="primary"/>
+                {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
                 Value Pack 
@@ -494,8 +514,9 @@ const callwithdraw = async () => {
             }}
           >
             <CardContent>
-            <Box display="flex" alignItems="center" pl={0.3}>
+            <Box display="flex" alignItems="center" pl={0.3} justifyContent="space-between">
                 <PaidIcon variant="outlined" fontSize="large" color="primary"/>
+                {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
                 Withdrawn Amount
@@ -525,8 +546,9 @@ const callwithdraw = async () => {
             }}
           >
             <CardContent>
-            <Box display="flex" alignItems="center" pl={0.3}>
+            <Box display="flex" alignItems="center" pl={0.3} justifyContent="space-between">
                 <GroupIcon variant="outlined" fontSize="large" color="primary"/>
+                {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
                 Downline
@@ -556,8 +578,9 @@ const callwithdraw = async () => {
             }}
           >
             <CardContent>
-            <Box display="flex" alignItems="center" pl={0.3}>
+            <Box display="flex" alignItems="center" pl={0.3} justifyContent="space-between">
                 <PersonOutlineIcon variant="outlined" fontSize="large" color="primary"/>
+                {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
                 Sponsor Address
@@ -574,7 +597,7 @@ const callwithdraw = async () => {
                   {levelnumber}
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
-                  Level Number
+                  Level (upline users)
                 </Typography>
               </Box>
             </CardContent>
@@ -599,14 +622,15 @@ const callwithdraw = async () => {
             }}
           >
             <CardContent>
-            <Box display="flex" alignItems="center" pl={0.3}>
+            <Box display="flex" alignItems="center" pl={0.3} justifyContent="space-between">
                 <QueryStatsIcon variant="outlined" fontSize="large" color="primary"/>
+                {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
                 Total Users
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                25000023
+                {totalUsers}
               </Typography>
 
               <Box
@@ -625,17 +649,28 @@ const callwithdraw = async () => {
               >
 
             <Typography variant="h5" noWrap>
-                Total Withdraw Amount
+                Total Withdrawals 
               </Typography>
+              {totalWithdraws == null && (
+
+                <Typography variant="subtitle1" noWrap>
+                 0
+                </Typography>
+              )}
+
+              {totalWithdraws != null && (
+
               <Typography variant="subtitle1" noWrap>
-                200000000
+              {totalWithdraws}
               </Typography>
+              )}
+   
 
                 </Box>
 
               <Box
                 sx={{
-                  pt: 1
+                  pt: 2
                 }}
               >
                 <Typography variant="h5" gutterBottom noWrap>
@@ -648,10 +683,9 @@ const callwithdraw = async () => {
                 }}
                 variant="outlined"
                 size="small"
-                label="Copy Ref Link"
+                label={copyRef}
                 color="primary"
-                onClick={handleDelete}
-                onDelete={handleDelete}
+                onClick={copyRefLink}
               />
               </Box>
             </CardContent>
@@ -664,14 +698,15 @@ const callwithdraw = async () => {
             }}
           >
             <CardContent>
-            <Box display="flex" alignItems="center" pl={0.3}>
+            <Box display="flex" alignItems="center" pl={0.3} justifyContent="space-between">
                 <AccountBalanceWalletIcon variant="outlined" fontSize="large" color="primary"/>
+                {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
                 Total Line Income
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                20% re-invested
+                Auto Re-invest 20%
               </Typography>
               <Box
                 sx={{
@@ -682,12 +717,15 @@ const callwithdraw = async () => {
                   {balance} Matic
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
-                  exact {xbalance} 
+                  Receive  {((80 / 100) * balance).toFixed(2)}
+                </Typography>
+                <Typography variant="subtitle2" noWrap>
+                  Re-invest  {((20 / 100) * balance).toFixed(2)}
                 </Typography>
 
                 <Box  
                 sx={{
-                  pt: 4
+                  pt: 2
                   
                 }}
               > 
@@ -696,11 +734,11 @@ const callwithdraw = async () => {
               {isConnected && (
                 <Tooltip arrow title="Auto re-invest 20% on withdraw"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={callwithdraw} 
-                disabled={loading}
+                disabled={loadingd}
                 >Withdraw</Button> </span></Tooltip> 
               )}
 
-              {isConnected && loading && ( 
+              {isConnected && loadingd && ( 
                 <CircularProgress color="primary" size={20} />
               )}
 
@@ -709,8 +747,14 @@ const callwithdraw = async () => {
                 <Button variant="outlined" size="small" color="primary" disabled>Withdraw</Button> 
                 </span></Tooltip>              )}
 
-
               </Box>
+              <Box
+                sx={{
+                  pt: 1
+                }}
+              ></Box>
+                {trnrecepitw && (<Button  size="small"  variant="outlined" color="success" onClick={() => openScan(trnrecepitw)} >Withdraw Receipt</Button>)}
+                
             </CardContent>
           </Card>
         </Grid>
@@ -754,16 +798,27 @@ const callwithdraw = async () => {
                   check sponsor health and buy
                 </Typography> */}
 
-            {/* <Typography
+            <Typography
               sx={{
                 pb: 1
               }}
               color="text.secondary"
               size="small" 
             >
-              If Sponsor has 20 downline users,then you miss downline income.
-            </Typography> */}
+              Receive 10 FASTX Tokens on each buy.
+              <Chip
+                sx={{
+                  mr: 0.5
+                }}
+                variant="outlined"
+                size="small"
+                label={copyTokens}
+                color="primary"
+                onClick={copyToken}
+              />
+            </Typography>
 
+  
 
                 {/* <Box  
                 sx={{
@@ -775,7 +830,7 @@ const callwithdraw = async () => {
               </Box> */}
                 <Box
                 sx={{
-                  pt: 2
+                  pt: 3
                 }}
               >
 
@@ -794,10 +849,15 @@ const callwithdraw = async () => {
                 <Tooltip arrow title="Please Connect Wallet to enable"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={sendValue} disabled>Buy Pack</Button> 
                 </span></Tooltip>              )}
-                {/* <Button variant="contained" size="small" color="primary" disabled>Buy Pack</Button> */}
                 </Box>
-                {errormsgg && (<Button  size="small"  variant="outlined" color="error" onClick={() => setErrormsgg(null)} >{errormsgg}</Button>)}
-                {warnmsgg && (<Button  size="small"  variant="outlined" color="warning" onClick={() => setWarnmsgg(null)} >{warnmsgg}</Button>)}
+                
+                <Box
+                sx={{
+                  pt: 1
+                }}
+              ></Box>
+                {errormsgg && (<Button  size="small"  variant="outlined" color="warning" onClick={() => setErrormsgg(null)} >{errormsgg}</Button>)}
+                {trnrecepitb && (<Button  size="small"  variant="outlined" color="success" onClick={() => openScan(trnrecepitb)} >Buy Receipt</Button>)}
                 
                 </CardContent>
               {/* </CardActionArea> */}
@@ -839,7 +899,7 @@ const callwithdraw = async () => {
                 </Box>
 
               <Typography variant="h5" noWrap>
-                Level
+                Level (upline users)
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 2
@@ -878,11 +938,11 @@ const callwithdraw = async () => {
               {isConnected && (
                 <Tooltip arrow title="Check Sponsor Level before buy"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={sendValue} 
-                disabled={loading}
+                disabled={loadings}
                 >Check Health</Button> </span></Tooltip> 
               )}
 
-              {isConnected && loading && ( 
+              {isConnected && loadings && ( 
                 <CircularProgress color="primary" size={20} />
               )}
 

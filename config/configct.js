@@ -1,5 +1,7 @@
-export const CONTADDRESS = '0x9e82b58B42c646598E00282d92c67633824E3D1c'; // Contract Address
+export const CONTADDRESS = '0x4858C97e7cCe207Af7C3CAe03D66A1A2956cC0Ab'; // Contract Address
+export const TOKENADDRESS = '0x24A965E1EAd7EEE2C72485B9Ba747f4E73E0041F'; // FASTX Token
 export const TXNURL = 'https://polygonscan.com/tx/';
+export const REFURL = 'http://localhost:3000/?ref=';
 
 
 //Smart Contract Links

@@ -267,7 +267,7 @@ function AccountBalance() {
                       <Typography align="right" variant="h4" noWrap>
                         20%
                       </Typography>
-                      <Text color="error">20</Text>
+                      <Text color="success">20</Text>
                     </Box>
                   </ListItem>
                   <ListItem disableGutters>
