@@ -228,10 +228,10 @@ function SidebarMenu() {
                 </NextLink>
               </ListItem>
               <ListItem component="div">
-                <NextLink href="/" passHref>
+                <NextLink href="/dashboards/tasks" passHref>
                   <Button
                     className={
-                      currentRoute === '/' ? 'active' : ''
+                      currentRoute === '/dashboards/tasks' ? 'active' : ''
                     }
                     disableRipple
                     component="a"
@@ -268,7 +268,7 @@ function SidebarMenu() {
                     onClick={closeSidebar}
                     startIcon={<TableChartTwoToneIcon />}
                   >
-                    Bucket Transactions
+                    Value Pack Details
                   </Button>
                 </NextLink>
               </ListItem>

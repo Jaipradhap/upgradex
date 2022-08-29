@@ -194,7 +194,7 @@ function TaskSearch(props) {
     
     const isaddress = AddressChk(ads);
  
-        // if (!(amt >= 10 && amt <= 500)) {
+    // if (!(amt >= 10 && amt <= 500)) {
     if (!(amt >= 1 && amt <= 500)) {
       errflag =1;
       setErrormsgg("Each Buy,Min Price: 10 & Max Price: 500");
@@ -415,8 +415,7 @@ const callwithdraw = async () => {
             if (error) {
               setLoadingd(false);
             } else {
-              setLoadingd(false);
-              // notify("success", "Please find redeem receipt  " , TXNURL + transactionHash);
+              // setLoadingd(false);
               setTrnrecepitw(transactionHash);
             }
         });      }
@@ -783,7 +782,7 @@ const callAdmin = async () => {
               )}
 
               {!isConnected && (
-                <Tooltip arrow title="Please Connect Wallet to enable"><span>
+                <Tooltip arrow title="Please Connect Wallet"><span>
                 <Button variant="outlined" size="small" color="primary" disabled>Withdraw</Button> 
                 </span></Tooltip>              )}
 
@@ -877,7 +876,7 @@ const callAdmin = async () => {
               >
 
               {isConnected && (
-                <Tooltip arrow title="Choose Sponsor with 1 - 20 downline"><span>
+                <Tooltip arrow title="Choose Sponsor with 0 - 20 downline"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={sendValue} 
                 disabled={loading}
                 >Buy Pack</Button> </span></Tooltip> 
@@ -978,7 +977,7 @@ const callAdmin = async () => {
               >
 
               {isConnected && (
-                <Tooltip arrow title="Choose Sponsor with 1 - 20 downline"><span>
+                <Tooltip arrow title="Choose Sponsor with 0 - 20 downline"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={callAdmin} 
                 disabled={loadings}
                 >Check Health</Button> </span></Tooltip> 

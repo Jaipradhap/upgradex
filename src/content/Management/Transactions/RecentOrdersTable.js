@@ -21,33 +21,14 @@ import {
   MenuItem,
   Typography,
   useTheme,
-  CardHeader
+  CardHeader,
+  Rating
 } from '@mui/material';
 
 import Label from 'src/components/Label';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 
-const getStatusLabel = (cryptoOrderStatus) => {
-  const map = {
-    failed: {
-      text: 'Failed',
-      color: 'error'
-    },
-    completed: {
-      text: 'Completed',
-      color: 'success'
-    },
-    pending: {
-      text: 'Pending',
-      color: 'warning'
-    }
-  };
-
-  const { text, color } = map[cryptoOrderStatus];
-
-  return <Label color={color}>{text}</Label>;
-};
 
 const applyFilters = (cryptoOrders, filters) => {
   return cryptoOrders.filter((cryptoOrder) => {
@@ -72,46 +53,6 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
     status: null
   });
 
-  const statusOptions = [
-    {
-      id: 'all',
-      name: 'All'
-    },
-    {
-      id: 'completed',
-      name: 'Completed'
-    },
-    {
-      id: 'pending',
-      name: 'Pending'
-    },
-    {
-      id: 'failed',
-      name: 'Failed'
-    }
-  ];
-
-  const handleStatusChange = (e) => {
-    let value = null;
-
-    if (e.target.value !== 'all') {
-      value = e.target.value;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      status: value
-    }));
-  };
-
-  const handlePageChange = (_event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleLimitChange = (event) => {
-    setLimit(parseInt(event.target.value));
-  };
-
   const filteredCryptoOrders = applyFilters(cryptoOrders, filters);
   const paginatedCryptoOrders = applyPagination(
     filteredCryptoOrders,
@@ -124,37 +65,23 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
     <Card>
       <CardHeader
         action={
-          <Box width={150}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel>Status</InputLabel>
-              <Select
-                value={filters.status || 'all'}
-                onChange={handleStatusChange}
-                label="Status"
-                autoWidth
-              >
-                {statusOptions.map((statusOption) => (
-                  <MenuItem key={statusOption.id} value={statusOption.id}>
-                    {statusOption.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <Box width={450}>
+            Free Flow Plans - Min 10 Matic , Max 500 Matic on each buy
           </Box>
         }
-        title="Recent Orders"
+        title="Value Pack Details"
       />
       <Divider />
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Order Details</TableCell>
-              <TableCell>Order ID</TableCell>
-              <TableCell>Source</TableCell>
-              <TableCell align="right">Amount</TableCell>
-              <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell>Buy Pack</TableCell>
+              <TableCell>70% to 25 Upline</TableCell>
+              <TableCell>20% to 20 Downline</TableCell>
+              <TableCell align="right">10% Sponsor Bonus</TableCell>
+              <TableCell align="right">Value Pack rating</TableCell>
+              {/* <TableCell align="right">Actions</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -171,9 +98,6 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
                     >
                       {cryptoOrder.orderDetails}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {format(cryptoOrder.orderDate, 'MMMM dd yyyy')}
-                    </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography
@@ -184,6 +108,9 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
                       noWrap
                     >
                       {cryptoOrder.orderID}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" noWrap>
+                      {/* 25 Users */}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -197,7 +124,7 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
                       {cryptoOrder.sourceName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {cryptoOrder.sourceDesc}
+                      {/* 20 Users */}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -208,46 +135,17 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.amountCrypto}
-                      {cryptoOrder.cryptoCurrency}
+                        {cryptoOrder.sourceDesc}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {numeral(cryptoOrder.amount).format(
-                        `${cryptoOrder.currency}0,0.00`
-                      )}
+                      5% Bonus on each next buy
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(cryptoOrder.status)}
+                    {/* {getStatusLabel(cryptoOrder.status)} */}
+                    <Rating value={cryptoOrder.status} defaultValue={5} precision={1} readOnly />
                   </TableCell>
-                  <TableCell align="right">
-                    <Tooltip title="Edit Order" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete Order" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <DeleteTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
+   
                 </TableRow>
               );
             })}
@@ -255,15 +153,13 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
         </Table>
       </TableContainer>
       <Box p={2}>
-        <TablePagination
-          component="div"
-          count={filteredCryptoOrders.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25, 30]}
-        />
+        Note : 
+        <ul>
+          <li>User's complete amount placed into FASTX distribution smart contract.</li>
+          <li>High Value Pack gets big part of the share ratio.</li>
+          <li>No withdraw and contract fee.</li>
+        </ul>
+    
       </Box>
     </Card>
   );
