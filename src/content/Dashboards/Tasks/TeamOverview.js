@@ -68,7 +68,7 @@ function TeamOverview() {
           pb: 3
         }}
       >
-        <Typography variant="h4">DEX Distribution Concept which works on 25-20 upline and downline model.</Typography>
+        <Typography variant="h4">Decentralized Distribution works on 25 upline and 20 downline model.</Typography>
 
       </Box>
     <Grid container spacing={4}>

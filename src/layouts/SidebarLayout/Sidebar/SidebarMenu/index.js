@@ -279,7 +279,7 @@ function SidebarMenu() {
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
-              Project 
+              Services 
             </ListSubheader>
           }
         >
@@ -313,11 +313,11 @@ function SidebarMenu() {
                     onClick={closeSidebar}
                     startIcon={<TrafficTwoToneIcon />}
                   >
-                    Services
+                    Partner with us
                   </Button>
                 </NextLink>
               </ListItem>
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <NextLink href="/management/profile/settings" passHref>
                   <Button
                     className={
@@ -333,7 +333,7 @@ function SidebarMenu() {
                     Project Updates
                   </Button>
                 </NextLink>
-              </ListItem>
+              </ListItem> */}
             </List>
           </SubMenuWrapper>
         </List>

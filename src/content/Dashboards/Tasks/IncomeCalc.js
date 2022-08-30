@@ -154,8 +154,8 @@ function IncomeCalc() {
           <Typography variant="subtitle2">
             <b>Income Calculator </b> - On every Buy made by your recruits / user, 
             70% to 25 upline, 
-            20% to 20 downline and
-            10% to a sponsor based on their value pack price.
+            20% to 20 downline based on their value pack and
+            flat 10% to sponsor as bouns.
             <Text color="black">
               <b></b>
             </Text>

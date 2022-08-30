@@ -63,29 +63,11 @@ function PageHeader(props) {
           
 
           <Typography variant="subtitle2">
-            Manage your crypto and grow it! Enjoy a well built system on polygon blockchain.
+            Manage your crypto and grow it with the FastX decentralized distribution network on the polygon blockchain.
           </Typography>
         </Box>
       </Box>
 
-      {/* <Box mt={{ xs: 3, md: 0 }}>
-      {errormsg && (<Button variant="outlined" color="error" >{errormsg}</Button>)}
-        
-        {!isConnected && (
-        <Button variant="contained" startIcon={<AccountBalanceWalletOutlinedIcon />}
-          onClick={onConnect}
-          >
-          Connect Wallet
-        </Button> )}
-
-        {isConnected && (
-        <Button variant="outlined" 
-          onClick={onDisconnect}
-          >
-          {accounts.substr(0, 5)}...{accounts.substr(accounts.length - 4, accounts.length - 1)}
-        </Button> )}
-
-      </Box> */}
     </Box>
   );
 }
