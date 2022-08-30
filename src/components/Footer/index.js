@@ -28,13 +28,13 @@ function Footer() {
           variant="subtitle1"
         >
           Powered by{' '}
-          <Link
-            href="https://rabbiteggsdefi.com"
+          {/* <Link
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
-          >
-            rabbiteggsdefi.com
-          </Link>
+          > */}
+            RabbitEggsDefi
+          {/* </Link> */}
         </Typography>
       </Box>
     </FooterWrapper>

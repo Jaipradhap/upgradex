@@ -223,7 +223,7 @@ function SidebarMenu() {
                     onClick={closeSidebar}
                     startIcon={<BrightnessLowTwoToneIcon />}
                   >
-                    Manage
+                    Manage Crypto
                   </Button>
                 </NextLink>
               </ListItem>

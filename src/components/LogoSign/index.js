@@ -4,6 +4,7 @@ import {
   Badge,
   tooltipClasses,
   styled,
+  Avatar,
   useTheme
 } from '@mui/material';
 import Link from 'src/components/Link';
@@ -114,11 +115,23 @@ function Logo() {
           color="success"
           badgeContent="1.0"
         >
-          <LogoSignWrapper>
+
+      <Avatar
+        sx={{
+          mx: 'auto',
+          mb: 1.5,
+          width: theme.spacing(8),
+          height: theme.spacing(8)
+        }}
+        alt="FastX Token"
+        src="https://rabbiteggsdefi.github.io/maticguide/images/fastxlogo512.png"
+      />
+
+          {/* <LogoSignWrapper>
             <LogoSign>
               <LogoSignInner />
             </LogoSign>
-          </LogoSignWrapper>
+          </LogoSignWrapper> */}
         </Badge>
       </LogoWrapper>
     </TooltipWrapper>

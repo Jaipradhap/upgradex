@@ -2,7 +2,7 @@ export const CONTADDRESS = '0x4Be25b76C136D02E971E8c9c08520865c158438e'; // Cont
 export const TOKENADDRESS = '0x28F849a7800a5BD3f6416Dd13C0AcCaCDC7Cf840'; // FASTX Token
 // export const TXNURL = 'https://polygonscan.com/tx/';
 export const TXNURL = 'https://mumbai.polygonscan.com/tx/';
-export const REFURL = 'http://localhost:3000/?ref=';
+export const REFURL = 'http://fastxmatic.com/?ref=';
 
 
 //Smart Contract Links

@@ -65,7 +65,7 @@ function Checklist() {
             </IconButton>
           </Tooltip>
         }
-        title="Checklist"
+        title="RoadMap"
       />
       <TimelineWrapper>
         <TimelineItem>
@@ -82,12 +82,12 @@ function Checklist() {
                 pb: 2
               }}
             >
-              "Tasks Quick List"
+              Phase I
             </Typography>
             <FormGroup>
               <FormControlLabel
-                control={<CheckboxWrapper color="primary" name="checkedC" />}
-                label="Prepare website launch"
+                control={<CheckboxWrapper color="primary" name="checkedC" checked/>}
+                label="User Dashboard launch"
               />
               <FormControlLabel
                 control={<CheckboxWrapper color="primary" name="checkedC" />}
@@ -114,7 +114,7 @@ function Checklist() {
                 pb: 2
               }}
             >
-              "Project Management"
+              Phase II
             </Typography>
             <FormGroup>
               <FormControlLabel
@@ -142,7 +142,7 @@ function Checklist() {
                 pb: 2
               }}
             >
-              "Business & Marketing"
+              Phase III
             </Typography>
             <FormGroup>
               <FormControlLabel

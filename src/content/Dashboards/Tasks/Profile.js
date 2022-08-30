@@ -8,12 +8,11 @@ import {
   ListItem,
   ListItemText,
   List,
+  Link,
   Avatar,
   useTheme
 } from '@mui/material';
-import PhoneTwoToneIcon from '@mui/icons-material/PhoneTwoTone';
-import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
-import MessageTwoToneIcon from '@mui/icons-material/MessageTwoTone';
+import { TOKENCT } from 'config/configct';
 
 function Profile() {
   const theme = useTheme();
@@ -27,60 +26,24 @@ function Profile() {
           width: theme.spacing(12),
           height: theme.spacing(12)
         }}
-        variant="rounded"
-        alt="Craig Donin"
-        src="/static/images/avatars/4.jpg"
+        alt="FastX Token"
+        src="https://rabbiteggsdefi.github.io/maticguide/images/FASTXcoin.png"
       />
       <Typography align="center" variant="h4" gutterBottom>
-        Craig Donin
+        FASTX Token
       </Typography>
       <Typography align="center" variant="subtitle2" gutterBottom>
-        Senior Web Developer
+        Reward Token for the participation in DEX distribution network
       </Typography>
 
       <Box display="flex" alignItems="center" justifyContent="center">
-        <Rating value={4} defaultValue={5} precision={1} readOnly />
-        <Typography
-          variant="h5"
-          sx={{
-            pl: 0.5
-          }}
-        >
-          4.1
-        </Typography>
+        <Rating value={5} defaultValue={5} precision={1} readOnly />
+
       </Box>
 
       <Box py={2} display="flex" alignItems="center" justifyContent="center">
-        <Tooltip arrow placement="top" title="Call">
-          <IconButton
-            color="primary"
-            sx={{
-              mx: 0.5
-            }}
-          >
-            <PhoneTwoToneIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip arrow placement="top" title="Send email">
-          <IconButton
-            color="primary"
-            sx={{
-              mx: 0.5
-            }}
-          >
-            <EmailTwoToneIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip arrow placement="top" title="Send message">
-          <IconButton
-            color="primary"
-            sx={{
-              mx: 0.5
-            }}
-          >
-            <MessageTwoToneIcon />
-          </IconButton>
-        </Tooltip>
+        Tokenomics
+  
       </Box>
       <List
         sx={{
@@ -94,11 +57,11 @@ function Profile() {
           }}
         >
           <ListItemText
-            primary="Join Date"
+            primary="Symbol"
             primaryTypographyProps={{ variant: 'subtitle2' }}
           />
           <Typography variant="subtitle2" color="text.primary">
-            22 January 2021
+            FASTX
           </Typography>
         </ListItem>
         <Divider component="li" />
@@ -108,11 +71,11 @@ function Profile() {
           }}
         >
           <ListItemText
-            primary="Company"
+            primary="Standard"
             primaryTypographyProps={{ variant: 'subtitle2' }}
           />
           <Typography variant="subtitle2" color="text.primary">
-            Google Inc.
+            ERC-20
           </Typography>
         </ListItem>
         <Divider component="li" />
@@ -122,16 +85,39 @@ function Profile() {
           }}
         >
           <ListItemText
-            primary="Tasks"
+            primary="Chain"
             primaryTypographyProps={{ variant: 'subtitle2' }}
           />
           <Typography
             variant="subtitle2"
             color="text.primary"
-            fontWeight="bold"
           >
-            67 active
+            Polygon
           </Typography>
+        </ListItem>
+
+        <Divider component="li" />
+        <ListItem
+          sx={{
+            py: 1.5
+          }}
+        >
+          <ListItemText
+            primary="Token Address"
+            primaryTypographyProps={{ variant: 'subtitle2' }}
+          />
+          <Typography
+            variant="subtitle2"
+            color="text.primary"
+          >
+            <Link
+            href={TOKENCT}
+            target="_blank"
+            rel="noopener noreferrer"
+          > 
+            Ox099e89
+            </Link>
+            </Typography>
         </ListItem>
       </List>
     </Box>

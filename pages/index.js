@@ -125,7 +125,6 @@ function DashboardTasks() {
   const tabs = [
     { value: 'analytics', label: 'Overview' },
     { value: 'taskSearch', label: 'FastX Matic' },
-    { value: 'nftmarket', label: 'Marketplace' },
   ];
 
    /* chain switch */
@@ -297,7 +296,6 @@ function DashboardTasks() {
                   >
                     <Grid container spacing={4}>
                       <Grid item xs={12} >
-                        {/* <TasksAnalytics /> */}
                         <AccountBalance />
                       </Grid>
         
@@ -305,12 +303,7 @@ function DashboardTasks() {
                   </Box>
                   <Divider />
                 </Grid>
-                <Grid item xs={12}>
-                  <Box p={4}>
-                    {/* <Projects /> */}
-                  </Box>
-                  <Divider />
-                </Grid>
+
                 <Grid item xs={12}>
                   <Box
                     sx={{
@@ -325,14 +318,16 @@ function DashboardTasks() {
                             background: `${theme.colors.alpha.white[70]}`
                           }}
                         >
-                          {/* <Checklist /> */}
+                          <Checklist />
                         </Box>
                       </Grid>
+
                       <Grid item xs={12} md={6}>
                         <Box p={4}>
-                          {/* <Profile /> */}
+                          <Profile />
                         </Box>
                       </Grid>
+
                     </Grid>
                   </Box>
                 </Grid>
@@ -354,14 +349,6 @@ function DashboardTasks() {
               </Grid>
             )}
 
-          {currentTab === 'nftmarket' && (
-              <Grid item xs={12}>
-                <Box p={4}>
-                  {/* <TaskSearch /> */}
-                  Work in progress.Project Updates posted in twitter.
-                </Box>
-              </Grid>
-            )}
           </Grid>
         </Card>
       </Container>
