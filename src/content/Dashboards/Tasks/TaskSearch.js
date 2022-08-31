@@ -4,9 +4,8 @@ import {
   Card,
   Grid,
   Box,
-  FormControl,
+  Link,
   CardContent,
-  CardActions,
   Typography,
   Avatar,
   Divider,
@@ -14,15 +13,10 @@ import {
   OutlinedInput,
   Chip,
   Tooltip,
-  AvatarGroup,
-  CardActionArea,
-  Pagination,
-  InputAdornment,
-  Menu,
-  MenuItem,
   styled,
   useTheme
 } from '@mui/material';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
 import PaidIcon from '@mui/icons-material/Paid';
 import GroupIcon from '@mui/icons-material/Group';
@@ -153,7 +147,26 @@ function TaskSearch(props) {
 
   const [subordinatesp, setSubordinatesp] = useState(0);
   const [levelnumberp, setLevelnumberp] = useState(0);
- 
+  const breadcrumbs = [
+    <Typography key="1" color="primary">
+     <b> Connect Wallet</b>
+    </Typography>,
+    <Typography key="2" color="primary">
+    <b> Refresh Board</b>
+  </Typography>,
+    <Typography key="3" color="primary">
+    <b> Enter Sponsor</b>
+  </Typography>,
+      <Typography key="4" color="primary">
+      <b> Check Sponsor Health</b>
+    </Typography>,
+        <Typography key="5" color="primary">
+        <b> Buy Pack</b>
+      </Typography>,
+          <Typography key="6" color="primary">
+           <b> Refresh Board</b>
+        </Typography>,
+  ];
 
   const copyRefLink = async () => {
     if(isConnected) {
@@ -508,9 +521,80 @@ const callAdmin = async () => {
         </Button> )}
 
       </Box>
-       
-
       </Box>
+
+      <Box
+        py={1}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      ></Box>
+
+      <Divider />
+      <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Please read the usage guide</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                  <Breadcrumbs separator="›" aria-label="breadcrumb">
+                  {breadcrumbs}
+                </Breadcrumbs>
+                <Box
+                sx={{
+                  pt: 1
+                }}
+              > </Box>
+                    <Typography>
+                    Please use the below options to find sponsor address
+                   </Typography>
+                   <ul>
+                     <li>Option 1 : Copy the fastx {' '}
+                     <Chip
+                          sx={{
+                            mr: 0.5
+                          }}
+                          variant="outlined"
+                          size="small"
+                          label="sponsor"
+                          color="primary"
+                          onClick={copyRefLink}
+                        /> 
+                       and check health.If downline within 0 to 20 ,then proceed to buy pack. Else check option 2.</li>
+                     <li>Option 2 : Goto  {' '}
+                     <Chip
+                          sx={{
+                            mr: 0.5
+                          }}
+                          variant="outlined"
+                          size="small"
+                          label="contract"
+                          color="primary"
+                          onClick={copyRefLink}
+                        /> 
+                       and check for BuyPack transaction.Copy "From address" and check health again before buy pack.</li>
+                   </ul>
+
+                   <Typography>
+                   Note : Existing Users are requested to use {' '}
+                  <Link
+                  href="/"
+                    > 
+                   fastxmatic.com </Link> instead of a referral link.
+                   </Typography>
+                   
+                  </AccordionDetails>
+                </Accordion>
+                <Divider />
+                <Box
+        py={1}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      ></Box>
 
  {/* row -1 */}
       <Grid container spacing={3}>
@@ -1005,31 +1089,7 @@ const callAdmin = async () => {
         
       </Grid>
 
-      <Box
-        py={2}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      ></Box>
-
-      <Divider />
-      <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>Please read the tips before buying the value pack</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse malesuada lacus ex, sit amet blandit leo
-                      lobortis eget.
-                      {/* {refad} */}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
+     
 
 
 
