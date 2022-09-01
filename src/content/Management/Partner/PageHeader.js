@@ -1,12 +1,9 @@
-import { Typography, Button, Grid } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+
 
 function PageHeader() {
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg'
-  };
+
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
@@ -14,7 +11,7 @@ function PageHeader() {
           Partner with us
         </Typography>
         <Typography variant="subtitle2">
-          FastX decentralized distribution network.
+          FastX decentralized distribution smart contract.
         </Typography>
       </Grid>
       <Grid item>
