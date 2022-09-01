@@ -9,6 +9,7 @@ import {
   Box,
   Container,
   Card,
+  Link,
   useTheme,
 } from '@mui/material';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
@@ -17,6 +18,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 
 
 import IncomeCalc from 'src/content/Dashboards/Tasks/IncomeCalc';
@@ -58,42 +62,42 @@ function DashboardTasks() {
                         ></Box>
 
         <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>Short Upline Distribution Illustration</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      
-                      
-                    </Typography>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Shortest Upline Distribution Illustration</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
 
 
-                    <Box
-                          sx={{
-                            pt: 1
-                          }}
-                        ></Box>
+            <Card sx={{ maxWidth: 500 }}>
+              <CardMedia
+                component="img"
+                height="140"
+                image="https://rabbiteggsdefi.github.io/maticguide/images/FastXLevel2.png"
+                alt="green iguana"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Shortest Upline
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  User buy FastX Token using MATIC Amount and it get distributed to 
+                  their respective upline , downline and sponsor based on the token value hold.
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Link
+                  href="https://rabbiteggsdefi.github.io/maticguide/images/FastXLevel2.png"
+                  target="_blank"
+                  rel="noopener noreferrer">Illustration Full View</Link>
+              </CardActions>
+            </Card>
 
-                    <Avatar
-                    variant={"rounded"}
-                    sx={{
-                      width: 885,
-                      height: 619
-                    }}
-                   
-                    src="https://rabbiteggsdefi.github.io/maticguide/images/FastXLevel2.png"
-                  />
-                    {/* <CardMedia
-                     sx={{ minHeight: 580 }}
-                      image=""
-                      title="Card Cover"
-                    /> */}
-                  </AccordionDetails>
-       </Accordion>
+          </AccordionDetails>
+        </Accordion>
 
        <Box
                           sx={{
@@ -106,10 +110,10 @@ function DashboardTasks() {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>Long Upline Distribution Illustration</Typography>
+                    <Typography>Longest Upline Distribution Illustration</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
+                    {/* <Typography>
                       
                       
                     </Typography>
@@ -129,12 +133,33 @@ function DashboardTasks() {
                     }}
                    
                     src="https://rabbiteggsdefi.github.io/maticguide/images/FastXLevel25.png"
-                  />
-                    {/* <CardMedia
-                     sx={{ minHeight: 580 }}
-                      image=""
-                      title="Card Cover"
-                    /> */}
+                  /> */}
+               
+               <Card sx={{ maxWidth: 500 }}>
+              <CardMedia
+                component="img"
+                height="140"
+                image="https://rabbiteggsdefi.github.io/maticguide/images/FastXLevel25.png"
+                alt="green iguana"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Longest Upline
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  User buy FastX Token using MATIC Amount and it get distributed to 
+                  their respective upline , downline and sponsor based on the token value hold.
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Link
+                  href="https://rabbiteggsdefi.github.io/maticguide/images/FastXLevel25.png"
+                  target="_blank"
+                  rel="noopener noreferrer">Illustration Full View</Link>
+              </CardActions>
+            </Card>
+
+
                   </AccordionDetails>
        </Accordion>
 

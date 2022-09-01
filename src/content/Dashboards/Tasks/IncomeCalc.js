@@ -152,9 +152,9 @@ function IncomeCalc() {
       >
         <Box>
           <Typography variant="subtitle2">
-            <b>Income Calculator </b> - On every Buy made by your recruits / user, 
+            <b>Income Calculator </b> - On every Buy Token made by your recruits / user, 
             70% to 25 upline, 
-            20% to 20 downline based on their value pack and
+            20% to 20 downline based on their Token value and
             flat 10% to sponsor as bouns.
             <Text color="black">
               <b></b>
@@ -173,7 +173,7 @@ function IncomeCalc() {
                 <CardTravelIcon variant="outlined" fontSize="large" color="primary"/>
               </Box>
               <Typography variant="h5" noWrap>
-                Value Pack 
+                Token Value 
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 Matic
@@ -188,7 +188,7 @@ function IncomeCalc() {
                   <TextField
                       required
                       id="outlined-required"
-                      label="Value Pack"
+                      label="Token Value"
                       defaultValue="10"
                       inputRef={pkgRef}      
                       type="number"
@@ -215,7 +215,7 @@ function IncomeCalc() {
               color="text.secondary"
               size="small" 
             >
-              Add Value Pack to see the increase on your share.
+              Add Token Value to see the increase on your share.
       
             </Typography>
 
@@ -266,7 +266,7 @@ function IncomeCalc() {
                 <Button variant="outlined" size="small" color="primary" 
                 fullWidth
                 onClick={callFunc}
-                >Buy Pack</Button> </span></Tooltip> 
+                >Buy Token</Button> </span></Tooltip> 
          
                 <Box
                 sx={{

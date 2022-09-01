@@ -87,15 +87,15 @@ function Checklist() {
             <FormGroup>
               <FormControlLabel
                 control={<CheckboxWrapper color="primary" name="checkedC" checked/>}
+                label="FASTX Token Release"
+              />
+              <FormControlLabel
+                control={<CheckboxWrapper color="primary" name="checkedC" checked/>}
                 label="User Dashboard launch"
               />
               <FormControlLabel
-                control={<CheckboxWrapper color="primary" name="checkedC" />}
-                label="Build React Native application"
-              />
-              <FormControlLabel
-                control={<CheckboxWrapper color="primary" name="checkedC" />}
-                label="Fix remaining bugs for first 4 pages"
+                control={<CheckboxWrapper color="primary" name="checkedC" checked/>}
+                label="Social media and Tokenomics"
               />
             </FormGroup>
           </TimelineContent>
@@ -118,12 +118,16 @@ function Checklist() {
             </Typography>
             <FormGroup>
               <FormControlLabel
-                control={<CheckboxWrapper color="primary" name="checkedC" />}
-                label="Complete sales pitch"
+                control={<CheckboxWrapper color="primary" name="checkedC" checked/>}
+                label="Marketing Campaign"
               />
               <FormControlLabel
                 control={<CheckboxWrapper color="primary" name="checkedC" />}
-                label="Improve SEO visibility"
+                label="Token listing on CEX and DEX"
+              />
+              <FormControlLabel
+                control={<CheckboxWrapper color="primary" name="checkedC" />}
+                label="Partnership and Liquidity"
               />
             </FormGroup>
           </TimelineContent>
@@ -147,11 +151,11 @@ function Checklist() {
             <FormGroup>
               <FormControlLabel
                 control={<CheckboxWrapper color="primary" name="checkedC" />}
-                label="Create marketing campaign"
+                label="Other EVM Chain Expansion"
               />
               <FormControlLabel
                 control={<CheckboxWrapper color="primary" name="checkedC" />}
-                label="Sign business contract with partners"
+                label="FastX NFT Marketplace"
               />
             </FormGroup>
           </TimelineContent>

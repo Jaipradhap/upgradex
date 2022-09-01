@@ -11,21 +11,14 @@ function PageHeader() {
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
-          Token Value Pack Walk-through
+          Partner with us
         </Typography>
         <Typography variant="subtitle2">
-          FastX decentralized distribution based on the Token value.
+          FastX decentralized distribution network.
         </Typography>
       </Grid>
       <Grid item>
-        {/* <Button
-          sx={{ mt: { xs: 2, md: 0 } }}
-          variant="contained"
-          startIcon={<AddTwoToneIcon fontSize="small" />}
-        >
-          Create transaction
-        </Button> */}
-      </Grid>
+       </Grid>
     </Grid>
   );
 }

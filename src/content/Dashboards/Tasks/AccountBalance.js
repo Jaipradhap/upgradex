@@ -139,7 +139,7 @@ function AccountBalance() {
               }}
               variant="h4"
             >
-              Value Pack Base Price
+              Token Value Pack
             </Typography>
             <Box>
               <Typography variant="h1" gutterBottom>

@@ -169,6 +169,7 @@ function DashboardTasks() {
 
   const onConnect = async () => {
     try {
+      setErrormsg(null);
       setIsLoadingConn(true);
       const currentProvider = detectCurrentProvider();
       if (currentProvider) {

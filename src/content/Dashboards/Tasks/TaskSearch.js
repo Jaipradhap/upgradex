@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PaidIcon from '@mui/icons-material/Paid';
 import GroupIcon from '@mui/icons-material/Group';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -140,7 +142,7 @@ function TaskSearch(props) {
   const [rate, setRate] = useState(4);
   const [copyTokens, setCopyTokens] = useState('Copy Token');
   const [copyRef, setCopyRef] = useState('Copy Ref Link');
- 
+  const [tokenamt, setTokenamt] = useState(10);
   
   const [totalUsers, setTotalUsers] = useState(10);
   const [totalWithdraws, setTotalWithdraws] = useState(null);
@@ -161,7 +163,7 @@ function TaskSearch(props) {
       <b> Check Sponsor Health</b>
     </Typography>,
         <Typography key="5" color="primary">
-        <b> Buy Pack</b>
+        <b> Buy Token</b>
       </Typography>,
           <Typography key="6" color="primary">
            <b> Refresh Board</b>
@@ -210,7 +212,7 @@ function TaskSearch(props) {
     // if (!(amt >= 10 && amt <= 500)) {
     if (!(amt >= 1 && amt <= 500)) {
       errflag =1;
-      setErrormsgg("Each Buy,Min Price: 10 & Max Price: 500");
+      setErrormsgg("Each Buy,Min Amount: 10 & Max Amount: 500");
     }
     else if (!isaddress){
       errflag =1;
@@ -499,8 +501,8 @@ const callAdmin = async () => {
       
         {isConnected && (<Button variant="outlined" color="primary" onClick={getUserDetails} disabled={loadingr}>Refresh Board</Button>)} {' '}
 
-      {errormsgw && (<Button variant="outlined" color="error" >{errormsgw}</Button>)} {' '}
-        
+      {errormsgw && (<Button variant="outlined" color="error" startIcon={<ErrorOutlineIcon fontSize="small" />} >{errormsgw}</Button>)} {' '}
+      
       {loadingw && ( 
                 <CircularProgress color="primary" size={25} />
               )}
@@ -581,7 +583,7 @@ const callAdmin = async () => {
                    <Typography>
                    Note : Existing Users are requested to use {' '}
                   <Link
-                  href="/"
+                  href="#"
                     > 
                    fastxmatic.com </Link> instead of a referral link.
                    </Typography>
@@ -610,7 +612,7 @@ const callAdmin = async () => {
                 {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
-                Value Pack 
+                Token Value
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 Matic
@@ -720,7 +722,7 @@ const callAdmin = async () => {
                   {levelnumber}
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
-                  Level (upline users)
+                  Level 
                 </Typography>
               </Box>
             </CardContent>
@@ -829,7 +831,7 @@ const callAdmin = async () => {
                 Total Line Income
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                Auto Re-invest 20%
+                Auto Buy Token 20%
               </Typography>
               <Box
                 sx={{
@@ -843,7 +845,7 @@ const callAdmin = async () => {
                   Receive  {((80 / 100) * balance).toFixed(2)}
                 </Typography>
                 <Typography variant="subtitle2" noWrap>
-                  Re-invest  {((20 / 100) * balance).toFixed(2)}
+                  Buy Token  {((20 / 100) * balance).toFixed(2)}
                 </Typography>
 
                 <Box  
@@ -855,7 +857,7 @@ const callAdmin = async () => {
               </Box>
 
               {isConnected && (
-                <Tooltip arrow title="Auto re-invest 20% on withdraw"><span>
+                <Tooltip arrow title="Auto Buy Token 20% on withdraw"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={callwithdraw} 
                 disabled={loadingd}
                 >Withdraw</Button> </span></Tooltip> 
@@ -876,7 +878,9 @@ const callAdmin = async () => {
                   pt: 1
                 }}
               ></Box>
-                {trnrecepitw && (<Button  size="small"  variant="outlined" color="success" onClick={() => openScan(trnrecepitw)} >Withdraw Receipt</Button>)}
+                {trnrecepitw && (<Button  size="small" fullWidth variant="outlined" color="success" 
+                startIcon={<CheckCircleOutlineIcon fontSize="small" />}
+                onClick={() => openScan(trnrecepitw)} >Withdraw Receipt</Button>)}
                 
             </CardContent>
           </Card>
@@ -896,9 +900,10 @@ const callAdmin = async () => {
                       required
                       id="outlined-required"
                       label="Matic Amount"
-                      defaultValue="10"
+                      value={tokenamt}
                       inputRef={amtRef}
                       type="number"
+                      onChange={(e) => setTokenamt(e.target.value)}
                     />
 
                 <Box
@@ -930,7 +935,7 @@ const callAdmin = async () => {
               color="text.secondary"
               size="small" 
             >
-              Receive 10 FASTX Tokens on each buy.
+              Receive {tokenamt} FASTX Tokens.
               <Chip
                 sx={{
                   mr: 0.5
@@ -963,7 +968,7 @@ const callAdmin = async () => {
                 <Tooltip arrow title="Choose Sponsor with 0 - 20 downline"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={sendValue} 
                 disabled={loading}
-                >Buy Pack</Button> </span></Tooltip> 
+                >Buy Token</Button> </span></Tooltip> 
               )}
 
               {isConnected && loading && ( 
@@ -972,7 +977,7 @@ const callAdmin = async () => {
 
               {!isConnected && (
                 <Tooltip arrow title="Please Connect Wallet"><span>
-                <Button variant="outlined" size="small" color="primary" onClick={sendValue} disabled>Buy Pack</Button> 
+                <Button variant="outlined" size="small" color="primary" onClick={sendValue} disabled>Buy Token</Button> 
                 </span></Tooltip>              )}
                 </Box>
                 
@@ -981,8 +986,12 @@ const callAdmin = async () => {
                   pt: 1
                 }}
               ></Box>
-                {errormsgg && (<Button  size="small"  variant="outlined" color="warning" onClick={() => setErrormsgg(null)} >{errormsgg}</Button>)}
-                {trnrecepitb && (<Button  size="small"  variant="outlined" color="success" onClick={() => openScan(trnrecepitb)} >Buy Receipt</Button>)}
+                {errormsgg && (<Button  size="small"  fullWidth variant="outlined" color="warning" 
+                startIcon={<ErrorOutlineIcon fontSize="small" />}
+                onClick={() => setErrormsgg(null)} >{errormsgg}</Button>)}
+                {trnrecepitb && (<Button  size="small"  variant="outlined" color="success" fullWidth
+                startIcon={<CheckCircleOutlineIcon fontSize="small" />}
+                onClick={() => openScan(trnrecepitb)} >Buy Receipt</Button>)}
                 
                 </CardContent>
               {/* </CardActionArea> */}
@@ -1024,7 +1033,7 @@ const callAdmin = async () => {
                 </Box>
 
               <Typography variant="h5" noWrap>
-                Level (upline users)
+                Level 
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 {levelnumberp}
