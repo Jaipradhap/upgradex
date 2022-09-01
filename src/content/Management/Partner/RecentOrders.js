@@ -18,7 +18,7 @@ function RecentOrders() {
         </Typography>
         <Typography variant="subtitle2">
          Helps you to accomplish the dream of owning your <Text color="primary">own 
-         decentralized distribution 25 upline - 20 downline token holders </Text> on the polygon blockchain.
+         decentralized distribution smart contract works on 25 upline - 20 downline token holders </Text> on the polygon blockchain.
          We offer you an opportunity to take control of your career, finances, schedule and 
          future through our proven, successful and profitable <Text color="primary">[70 : 30] </Text> franchise model. 
          Joining hands with us will give you complete ownership and rewards of being a 
