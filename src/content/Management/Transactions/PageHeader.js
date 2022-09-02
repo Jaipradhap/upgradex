@@ -14,7 +14,7 @@ function PageHeader() {
           Token Value Pack Walk-through
         </Typography>
         <Typography variant="subtitle2">
-          FastX decentralized distribution based on the Token value.
+          FastX decentralized distribution based on the Token holding value.
         </Typography>
       </Grid>
       <Grid item>

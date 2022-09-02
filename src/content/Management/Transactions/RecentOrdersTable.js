@@ -76,11 +76,11 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Buy Token</TableCell>
+              <TableCell>Token holdings</TableCell>
               <TableCell>70% to 25 Upline</TableCell>
               <TableCell>20% to 20 Downline</TableCell>
               <TableCell align="right">10% Sponsor Bonus</TableCell>
-              <TableCell align="right">Token Value rating</TableCell>
+              <TableCell align="right">Token holding rating</TableCell>
               {/* <TableCell align="right">Actions</TableCell> */}
             </TableRow>
           </TableHead>
@@ -156,7 +156,7 @@ const RecentOrdersTable = ({ cryptoOrders }) => {
         Note : 
         <ul>
           <li>User's complete amount placed into FASTX distribution smart contract.</li>
-          <li>High Token Value gets big part of the share ratio.</li>
+          <li>High Token Holding Value gets big part of the share ratio.</li>
           <li>No withdraw and contract fee.</li>
         </ul>
     

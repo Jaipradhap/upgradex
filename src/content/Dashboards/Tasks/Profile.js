@@ -33,7 +33,7 @@ function Profile() {
         FASTX Token
       </Typography>
       <Typography align="center" variant="subtitle2" gutterBottom>
-        Token for the participation in decentralized distribution network
+        Token for the participation in decentralized distribution smart contract
       </Typography>
 
       <Box display="flex" alignItems="center" justifyContent="center">

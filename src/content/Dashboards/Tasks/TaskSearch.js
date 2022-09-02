@@ -125,6 +125,8 @@ function TaskSearch(props) {
   const [loadingr, setLoadingr] = useState(false);
   const [loadingd, setLoadingd] = useState(false);
   const [loadings, setLoadings] = useState(false);
+  const [loadingsch, setLoadingsch] = useState(false);
+  
   const [trnrecepitb, setTrnrecepitb] = useState(null);
   const [trnrecepitw, setTrnrecepitw] = useState(null);
   // DashBoard
@@ -142,10 +144,12 @@ function TaskSearch(props) {
   const [rate, setRate] = useState(4);
   const [copyTokens, setCopyTokens] = useState('Copy Token');
   const [copyRef, setCopyRef] = useState('Copy Ref Link');
+  const [copyShRef, setCopyShRef] = useState('Copy and Share Ref Link');
   const [tokenamt, setTokenamt] = useState(10);
   
-  const [totalUsers, setTotalUsers] = useState(10);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [totalWithdraws, setTotalWithdraws] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const [subordinatesp, setSubordinatesp] = useState(0);
   const [levelnumberp, setLevelnumberp] = useState(0);
@@ -174,6 +178,7 @@ function TaskSearch(props) {
     if(isConnected) {
     navigator.clipboard.writeText(REFURL.concat(accounts));
     setCopyRef('Copied!');
+    setCopyShRef('Copied!');
     }
    }
 
@@ -223,55 +228,20 @@ function TaskSearch(props) {
       setErrormsgg("Please verify sponsor address!Looks same.");
     }
 
+
     // Check Sponsor in the tree system
-/*
-    if(accounts) {
-      const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
-        ContractAddress
-      );
+ 
 
-      if(!instance) {
-        setErrormsgg("Network Busy! Please try after sometime");
-      }
-      else {
-  
-      await instance.methods.getUrSubOrdinates(ads).call(
-        function (err, res) {
-          if (err) {
-          }else {
-          console.log(res);
-            if (res >=1) {
-              setWarnmsgg("Sponsor has 20 downline users already.Please check Sponsor Finder");
-            }
-          
-          }
-        }
-      );
-
-      // next
-      
-      }
-      }
-      */
     if (errflag > 0) { setLoading(false); return; }
  
     
-    // console.log(AddressChk(ads));
     
     await callBuy(ads,amt);
-
-    // window.setTimeout(() => {
-      // setSuccess(true);
-      // setLoading(false);
-    // }, 2000);
 
     setLoading(false);
 
   } catch (error) {
     setLoading(false);
-    console.log(error);
-    // notify("info","Please try again! To know the steps ", GUIDE);
 
   }
 }
@@ -314,7 +284,7 @@ const getUserDetails = async () => {
         );
 
         let isNewUser = await instance.methods.checkUser(accounts).call();
-        console.log(isNewUser);
+        // console.log(isNewUser);
         setNewUser(!isNewUser);
 
         if (!isNewUser) { setLoadingr(false); return; }
@@ -355,7 +325,7 @@ const getUserDetails = async () => {
 
      setLoadingr(false);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     setLoadingr(false);
   }
 }; 
@@ -372,9 +342,6 @@ const callBuy = async (sponaddress,buyprice) => {
 
     if(accounts) {
 
-      // let qty = itemsQty;
-      // console.log('qty');
-      // console.log(qty);
     let totalamt = buyprice.toString();
 
 
@@ -386,16 +353,18 @@ const callBuy = async (sponaddress,buyprice) => {
       if(!instance) {
       }
       else {
+
+      
+        let isNewUser = await instance.methods.checkUser(sponaddress).call();
+
+        if (!isNewUser) { setErrormsgg("Sponsor Not Found! Please check sponsor finder tool"); return; }
+    
+
     await instance.methods.BuyPack(sponaddress).send({ from: accounts , value: Web3.utils.toWei(totalamt, 'ether')}, 
     function(error, transactionHash){
       if (error) {
-        // console.log(error);
-        // notify("info","Please try again! To know the steps ", GUIDE);
       } else {
         setTrnrecepitb(transactionHash);
-        // notify("success", "Please find the receipt  " , TXNURL + transactionHash);
-        // notify("info","Minting is the fuel,Please encourage others", TIPS);
-      
       }
   });
 }
@@ -405,8 +374,6 @@ const callBuy = async (sponaddress,buyprice) => {
 }
   } catch (error) {
     setErrormsgg("Please try again later!");
-    // notify("info","Please try again! To know the steps ", GUIDE);
-
   }
 }; 
 
@@ -443,10 +410,11 @@ const callwithdraw = async () => {
   }
 }; 
 
-// Admin
+// getChild
 
-const callAdmin = async () => {
+const getChild = async () => {
   try {
+    if (subordinatesp <= 0) {  return;} // setWarnmsgg("Downline token holders");
     const isaddress = AddressChk(sponaddress.trim());
     if(accounts && isaddress) {
       setLoadings(true);
@@ -458,6 +426,60 @@ const callAdmin = async () => {
       if(!instance) {
       }
       else {
+
+        let isNewUser = await instance.methods.checkUser(sponaddress.trim()).call();
+        if (!isNewUser) { setLoadings(false); return; }
+    
+
+        await instance.methods.getChildAddress(sponaddress.trim()).call(
+          function (err, res) {
+            if (err) {
+              setLoadings(false);
+            } else {
+              // let tempArr = [];
+              for(let i=0;i < subordinatesp;i++) {
+                
+                cartItems.push({id: i+1,value:res[i]});
+                
+              }
+              setWarnmsgg("Please check below section");
+              //  console.log(tempArr);
+              // setCartItems([...cartItems, tempArr]);
+              //  setLoadingsch(false);
+            }
+          }
+        );
+      }
+      }
+      setLoadings(false);
+      setLoadingsch(false);
+  } catch (error) {
+    setLoadings(false);
+setLoadingsch(false);
+  }
+}; 
+
+// Admin
+
+const callAdmin = async () => {
+  try {
+    console.log(cartItems);
+    const isaddress = AddressChk(sponaddress.trim());
+    if(accounts && isaddress) {
+      setLoadings(true);
+    const instance = new web3.eth.Contract(
+      SimpleStorageContract.abi,
+      ContractAddress
+    );
+
+      if(!instance) {
+      }
+      else {
+
+        let isNewUser = await instance.methods.checkUser(sponaddress.trim()).call();
+        if (!isNewUser) { setLoadings(false); return; }
+    
+
         await instance.methods.getDashBoard(sponaddress.trim()).call(
           function (err, res) {
             if (err) {
@@ -465,6 +487,16 @@ const callAdmin = async () => {
             } else {
               setSubordinatesp(res[2]);
               setLevelnumberp(res[3]);
+
+              if(res[2] >=20){
+                setWarnmsgg("20 Downline token holders have been reached! It is recommended for influencers only to choose this sponsor");
+              }
+
+              if(res[2] > 0){
+              setLoadingsch(true);
+              }
+              setCartItems([]);
+
               setLoadings(false);
             }
           }
@@ -499,7 +531,7 @@ const callAdmin = async () => {
 
         <Box mt={{ xs: 2, md: 0 }}>
       
-        {isConnected && (<Button variant="outlined" color="primary" onClick={getUserDetails} disabled={loadingr}>Refresh Board</Button>)} {' '}
+        {isConnected && (<Button variant="outlined" color="success" onClick={getUserDetails} disabled={loadingr}>Refresh Board</Button>)} {' '}
 
       {errormsgw && (<Button variant="outlined" color="error" startIcon={<ErrorOutlineIcon fontSize="small" />} >{errormsgw}</Button>)} {' '}
       
@@ -539,7 +571,7 @@ const callAdmin = async () => {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>Please read the usage guide</Typography>
+                    <Typography variant="h5">Best sponsor finder tool</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                   <Breadcrumbs separator="›" aria-label="breadcrumb">
@@ -551,7 +583,7 @@ const callAdmin = async () => {
                 }}
               > </Box>
                     <Typography>
-                    Please use the below options to find sponsor address
+                    In case of not having referral link,Please use the easy options to find sponsor address
                    </Typography>
                    <ul>
                      <li>Option 1 : Copy the fastx {' '}
@@ -565,7 +597,7 @@ const callAdmin = async () => {
                           color="primary"
                           onClick={copyRefLink}
                         /> 
-                       and check health.If downline within 0 to 20 ,then proceed to buy pack. Else check option 2.</li>
+                       and check health.If downline within 0 to 20 ,then proceed to buy token.</li>
                      <li>Option 2 : Goto  {' '}
                      <Chip
                           sx={{
@@ -577,7 +609,7 @@ const callAdmin = async () => {
                           color="primary"
                           onClick={copyRefLink}
                         /> 
-                       and check for BuyPack transaction.Copy "From address" and check health again before buy pack.</li>
+                       and check for transactions.Copy "From address" and check health again before buy token.</li>
                    </ul>
 
                    <Typography>
@@ -612,7 +644,7 @@ const callAdmin = async () => {
                 {isConnected && loadingr && (  <CircularProgress color="primary" size={20} />   )}
               </Box>
               <Typography variant="h5" noWrap>
-                Token Value
+                Token Holding Value
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 Matic
@@ -679,7 +711,7 @@ const callAdmin = async () => {
                 Downline
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                users count {subordinates}
+                token holders {subordinates}
               </Typography>
               <Box
                 sx={{
@@ -882,6 +914,16 @@ const callAdmin = async () => {
                 startIcon={<CheckCircleOutlineIcon fontSize="small" />}
                 onClick={() => openScan(trnrecepitw)} >Withdraw Receipt</Button>)}
                 
+                <Box
+                sx={{
+                  pt: 1
+                }}
+              ></Box>
+
+                {trnrecepitw && (<Button  size="small"  variant="outlined" color="success" fullWidth
+                onClick={() => copyRefLink()} >{copyShRef}</Button>)}
+                
+
             </CardContent>
           </Card>
         </Grid>
@@ -987,11 +1029,21 @@ const callAdmin = async () => {
                 }}
               ></Box>
                 {errormsgg && (<Button  size="small"  fullWidth variant="outlined" color="warning" 
-                startIcon={<ErrorOutlineIcon fontSize="small" />}
+                startIcon={<ErrorOutlineIcon fontSize="small" />} style={{textAlign: 'left'}}
                 onClick={() => setErrormsgg(null)} >{errormsgg}</Button>)}
+
                 {trnrecepitb && (<Button  size="small"  variant="outlined" color="success" fullWidth
                 startIcon={<CheckCircleOutlineIcon fontSize="small" />}
                 onClick={() => openScan(trnrecepitb)} >Buy Receipt</Button>)}
+
+                <Box
+                sx={{
+                  pt: 1
+                }}
+              ></Box>
+
+                {trnrecepitb && (<Button  size="small"  variant="outlined" color="success" fullWidth
+                onClick={() => copyRefLink()} >{copyShRef}</Button>)}
                 
                 </CardContent>
               {/* </CardActionArea> */}
@@ -1048,10 +1100,24 @@ const callAdmin = async () => {
 
 
               <Typography variant="h5" noWrap>
-                Downline Users
+                Downline Holders
+
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                {subordinatesp}
+                {subordinatesp}  {' '}
+                {isConnected && loadingsch && (
+                <Chip
+                          sx={{
+                            mr: 0.5
+                          }}
+                          variant="outlined"
+                          size="small"
+                          label="Show"
+                          color="primary"
+                          onClick={getChild}
+                          disabled={loadings}
+                        /> 
+                )}
               </Typography>
 
               <Box  
@@ -1083,25 +1149,49 @@ const callAdmin = async () => {
               {!isConnected && (
                 <Tooltip arrow title="Please Connect Wallet"><span>
                 <Button variant="outlined" size="small" color="primary" onClick={callAdmin} disabled>Check Health</Button> 
-                </span></Tooltip>              )}
+                </span></Tooltip>  )}
                 </Box>
+
+                <Box
+                sx={{
+                  pt: 1
+                }}
+              ></Box>
               
-                {/* {errormsgg && (<Button  size="small"  variant="outlined" color="error" onClick={() => setErrormsgg(null)} >{errormsgg}</Button>)} */}
-                {/* {warnmsgg && (<Button  size="small"  variant="outlined" color="warning" onClick={() => setWarnmsgg(null)} >{warnmsgg}</Button>)} */}
+                {warnmsgg && (<Button  size="small"  variant="outlined" color="warning" style={{textAlign: 'left'}}
+                onClick={() => setWarnmsgg(null)} >{warnmsgg}</Button>)}
                 
+
+
                 </CardContent>
-              {/* </CardActionArea> */}
+              
             </CardAddAction>
-          {/* </Tooltip> */}
+        
         </Grid>
 
-        
-      </Grid>
+</Grid>
 
+<Box
+        py={2}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      ></Box>
+
+{/* <Grid container spacing={3}> */}
+
+{/* <Grid xs={12} sm={6} md={3} item> */}
      
-
-
-
+          {cartItems.map((item) => (
+          
+          <Button variant="outlined" size="small" key={item.id} onClick={(e) => setSponaddress(item.value)}>
+          {item.value}
+          </Button> 
+            // <Text key={item.id}> {item.value}</Text>
+          ))}
+  
+  {/* </Grid> */}
+  {/* </Grid> */}
     </>
   );
 }

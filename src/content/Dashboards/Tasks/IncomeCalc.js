@@ -154,7 +154,7 @@ function IncomeCalc() {
           <Typography variant="subtitle2">
             <b>Income Calculator </b> - On every Buy Token made by your recruits / user, 
             70% to 25 upline, 
-            20% to 20 downline based on their Token value and
+            20% to 20 downline based on their Token holding value and
             flat 10% to sponsor as bouns.
             <Text color="black">
               <b></b>
@@ -173,7 +173,7 @@ function IncomeCalc() {
                 <CardTravelIcon variant="outlined" fontSize="large" color="primary"/>
               </Box>
               <Typography variant="h5" noWrap>
-                Token Value 
+                Token Holding Value 
               </Typography>
               <Typography variant="subtitle1" noWrap>
                 Matic
@@ -188,7 +188,7 @@ function IncomeCalc() {
                   <TextField
                       required
                       id="outlined-required"
-                      label="Token Value"
+                      label="Token Holding Value"
                       defaultValue="10"
                       inputRef={pkgRef}      
                       type="number"
@@ -215,7 +215,7 @@ function IncomeCalc() {
               color="text.secondary"
               size="small" 
             >
-              Add Token Value to see the increase on your share.
+              Add Token Holding Value to see the increase on your share.
       
             </Typography>
 

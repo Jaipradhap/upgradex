@@ -68,7 +68,7 @@ function TeamOverview() {
           pb: 3
         }}
       >
-        <Typography variant="h4">Buy FastX token to participate in the decentralized distribution, works on 25 upline and 20 downline model.</Typography>
+        <Typography variant="h4">Buy FastX token to participate in the decentralized distribution, works on 25 upline and 20 downline token holders.</Typography>
 
       </Box>
     <Grid container spacing={4}>

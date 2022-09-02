@@ -85,7 +85,7 @@ function DashboardTasks() {
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   User buy FastX Token using MATIC Amount and it get distributed to 
-                  their respective upline , downline and sponsor based on the token value hold.
+                  their respective upline , downline and sponsor based on the token holding value.
                 </Typography>
               </CardContent>
               <CardActions>
@@ -148,7 +148,7 @@ function DashboardTasks() {
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   User buy FastX Token using MATIC Amount and it get distributed to 
-                  their respective upline , downline and sponsor based on the token value hold.
+                  their respective upline , downline and sponsor based on the token holding value.
                 </Typography>
               </CardContent>
               <CardActions>

@@ -150,7 +150,7 @@ function AccountBalance() {
                 fontWeight="normal"
                 color="text.secondary"
               >
-                Distribute 70% to 25 Upline and 20% to 20 Downline Users
+                Distribute 70% to 25 Upline and 20% to 20 Downline token holders
               </Typography>
               <Box
                 display="flex"
@@ -224,16 +224,13 @@ function AccountBalance() {
                 >
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
-                      {/* <img
-                        alt="BTC"
-                        src="/static/images/placeholders/logo/bitcoin.png"
-                      /> */}
+
                       <AccountCircleTwoToneIcon />
                     </ListItemAvatarWrapper>
                     <ListItemText
                       primary="Upline"
                       primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Users"
+                      secondary="Token Holders"
                       secondaryTypographyProps={{
                         variant: 'subtitle2',
                         noWrap: true
@@ -248,16 +245,13 @@ function AccountBalance() {
                   </ListItem>
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
-                      {/* <img
-                        alt="XRP"
-                        src="/static/images/placeholders/logo/ripple.png"
-                      /> */}
+
                       <AccountCircleTwoToneIcon/>
                     </ListItemAvatarWrapper>
                     <ListItemText
                       primary="Downline"
                       primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Users"
+                      secondary="Token Holders"
                       secondaryTypographyProps={{
                         variant: 'subtitle2',
                         noWrap: true
