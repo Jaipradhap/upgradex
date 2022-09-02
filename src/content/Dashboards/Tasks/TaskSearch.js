@@ -4,7 +4,7 @@ import {
   Card,
   Grid,
   Box,
-  Link,
+  IconButton,
   CardContent,
   Typography,
   Avatar,
@@ -32,6 +32,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
+import RefreshTwoToneIcon from '@mui/icons-material/RefreshTwoTone';
 import Text from 'src/components/Text';
 import Web3 from "web3";
 
@@ -119,13 +121,17 @@ function TaskSearch(props) {
   const amtRef = useRef(null);
   const addressRef = useRef(null);
   const [errormsgg, setErrormsgg] = useState(null);
+  const [errormsgsp, setErrormsgsp] = useState(null);
+  const [errormsgfi, setErrormsgfi] = useState(null);
   const [warnmsgg, setWarnmsgg] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadingw, setLoadingw] = useState(false);
   const [loadingr, setLoadingr] = useState(false);
   const [loadingd, setLoadingd] = useState(false);
   const [loadings, setLoadings] = useState(false);
-  const [loadingsch, setLoadingsch] = useState(false);
+  const [loadingsch, setLoadingsch] = useState(true);
+  const [loadingfind, setLoadingfind] = useState(false);
+  
   
   const [trnrecepitb, setTrnrecepitb] = useState(null);
   const [trnrecepitw, setTrnrecepitw] = useState(null);
@@ -377,6 +383,55 @@ const callBuy = async (sponaddress,buyprice) => {
   }
 }; 
 
+// callSponsor
+
+
+const callSponsor = async () => {
+  try {
+    if(accounts) {
+      setLoadingfind(true);
+    const instance = new web3.eth.Contract(
+      SimpleStorageContract.abi,
+      ContractAddress
+    );
+
+      if(!instance) {
+      }
+      else {
+
+        let isNewUser = await instance.methods.checkUser(accounts.trim()).call();
+        if (isNewUser) { setErrormsgfi("Sponsor already exists"); setLoadingfind(false); return; }
+    
+
+        await instance.methods.getSponsor().call(
+          function (err, res) {
+            if (err) {
+              setLoadingfind(false);
+            } else {
+
+              for(let i=0;i < 5;i++) {
+                
+                if(/^0x0+$/.test(res[i])) {}
+                // if(parseInt(res[i], 16) === 0) {}
+                else {  cartItems.push({id: i+1,value:res[i]}); }
+                
+              }
+              // setWarnmsgg("Please check below section");
+              // console.log(cartItems);
+              setLoadingsch(false);
+            }
+          }
+        );
+      }
+      }
+      setLoadingfind(false);
+      
+  } catch (error) {
+    setLoadingfind(false);
+
+  }
+}; 
+
 // 5.callwithdraw
 
 const callwithdraw = async () => {
@@ -461,9 +516,9 @@ setLoadingsch(false);
 
 // Admin
 
-const callAdmin = async () => {
+const callAdmin = async (sponaddress) => {
   try {
-    console.log(cartItems);
+    // console.log(sponaddress);
     const isaddress = AddressChk(sponaddress.trim());
     if(accounts && isaddress) {
       setLoadings(true);
@@ -476,8 +531,8 @@ const callAdmin = async () => {
       }
       else {
 
-        let isNewUser = await instance.methods.checkUser(sponaddress.trim()).call();
-        if (!isNewUser) { setLoadings(false); return; }
+        // let isNewUser = await instance.methods.checkUser(sponaddress.trim()).call();
+        // if (!isNewUser) { setLoadings(false); return; }
     
 
         await instance.methods.getDashBoard(sponaddress.trim()).call(
@@ -488,16 +543,20 @@ const callAdmin = async () => {
               setSubordinatesp(res[2]);
               setLevelnumberp(res[3]);
 
+              if(res[2] >=0 && res[2] <=19){
+                setErrormsgsp("Health Check Pass");
+              }
+
               if(res[2] >=20){
-                setWarnmsgg("20 Downline token holders have been reached! It is recommended for influencers only to choose this sponsor");
+                setWarnmsgg("Already 20 Downline token holders exists! It is recommended for influencers only to choose this sponsor");
               }
 
               if(res[2] > 0){
-              setLoadingsch(true);
+              // setLoadingsch(true);
               }
-              setCartItems([]);
+              // setCartItems([]);
 
-              setLoadings(false);
+              // setLoadings(false);
             }
           }
         );
@@ -571,55 +630,76 @@ const callAdmin = async () => {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography variant="h5">Best sponsor finder tool</Typography>
+                    <Typography variant="h5">Sponsor Finder Tool</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                  <Breadcrumbs separator="›" aria-label="breadcrumb">
-                  {breadcrumbs}
-                </Breadcrumbs>
                 <Box
                 sx={{
                   pt: 1
                 }}
               > </Box>
-                    <Typography>
-                    In case of not having referral link,Please use the easy options to find sponsor address
-                   </Typography>
-                   <ul>
-                     <li>Option 1 : Copy the fastx {' '}
-                     <Chip
-                          sx={{
-                            mr: 0.5
-                          }}
-                          variant="outlined"
-                          size="small"
-                          label="sponsor"
-                          color="primary"
-                          onClick={copyRefLink}
-                        /> 
-                       and check health.If downline within 0 to 20 ,then proceed to buy token.</li>
-                     <li>Option 2 : Goto  {' '}
-                     <Chip
-                          sx={{
-                            mr: 0.5
-                          }}
-                          variant="outlined"
-                          size="small"
-                          label="contract"
-                          color="primary"
-                          onClick={copyRefLink}
-                        /> 
-                       and check for transactions.Copy "From address" and check health again before buy token.</li>
-                   </ul>
 
-                   <Typography>
-                   Note : Existing Users are requested to use {' '}
-                  <Link
-                  href="#"
-                    > 
-                   fastxmatic.com </Link> instead of a referral link.
-                   </Typography>
-                   
+
+              {isConnected && loadingsch && (
+                <Button variant="outlined" size="small" color="primary" onClick={callSponsor} 
+                disabled={loadingfind}  endIcon={<SearchTwoToneIcon fontSize="small" />}
+                >Find Sponsor Address</Button>
+              )}
+
+              {isConnected && loadingfind && ( 
+                <CircularProgress color="primary" size={20} />
+              )}
+              { ' ' }
+              {errormsgfi && (<Button  size="small" startIcon={<ErrorOutlineIcon fontSize="small" />}  variant="outlined" color="warning" style={{textAlign: 'left'}}
+                  onClick={() => setErrormsgfi(null)} >{errormsgfi}</Button>)}
+
+              <Box
+                sx={{
+                  pt: 1
+                }}
+              > </Box>
+
+
+      {cartItems.length > 0 && (
+      <Grid container spacing={3}>
+        <Grid xs={12} sm={6} md={3} item>
+        <CardAddAction>
+            <CardContent>
+            <Typography variant="subtitle1">
+                Click to copy address into Sponsor Address Box.
+              </Typography>
+
+            {cartItems.map((item) => (
+          
+          <Box
+          key={item.id} 
+          sx={{
+            pt: 1
+          }}
+        >
+          <Button variant="outlined" size="small" onClick={(e) => { setSponaddress(item.value); addressRef.current.focus(); callAdmin(item.value); } }>
+          {item.value.substr(0, 10)} 
+          </Button> 
+
+          </Box>
+          ))}
+
+            </CardContent>
+            </CardAddAction>
+            </Grid>
+            </Grid> )}
+
+            <Box
+                sx={{
+                  pt: 3
+                }}
+              > </Box>
+
+            <Typography>Simple Usage Steps:  </Typography>
+            <Breadcrumbs separator="›" aria-label="breadcrumb">
+                  {breadcrumbs}
+                </Breadcrumbs>
+
                   </AccordionDetails>
                 </Accordion>
                 <Divider />
@@ -961,7 +1041,7 @@ const callAdmin = async () => {
                       value={sponaddress}
                       inputRef={addressRef}
                       inputProps={{ maxLength: 80 }}
-                      onChange={(e) => setSponaddress(e.target.value)}
+                      onChange={(e) => { setSponaddress(e.target.value); }}
                     />
 
               <Box
@@ -1069,9 +1149,18 @@ const callAdmin = async () => {
                   
                 }}
               > 
-              <Typography variant="h5" noWrap>
-                Sponsor Status
+               <Box display="flex" alignItems="center" pl={0.3} justifyContent="space-between">
+
+               <Typography variant="h5" noWrap>
+                Sponsor Health Check
               </Typography>
+
+            <Tooltip arrow title="Refresh Only If Level shown as 0">
+            <IconButton size="small" color="primary" onClick={ () => callAdmin(sponaddress) }>
+              <RefreshTwoToneIcon />
+            </IconButton>
+          </Tooltip> </Box>
+
               <Typography variant="subtitle1" noWrap>
               {sponaddress.substr(0, 5)}...{sponaddress.substr(sponaddress.length - 4, sponaddress.length - 1)}
               </Typography>
@@ -1104,20 +1193,7 @@ const callAdmin = async () => {
 
               </Typography>
               <Typography variant="subtitle1" noWrap>
-                {subordinatesp}  {' '}
-                {isConnected && loadingsch && (
-                <Chip
-                          sx={{
-                            mr: 0.5
-                          }}
-                          variant="outlined"
-                          size="small"
-                          label="Show"
-                          color="primary"
-                          onClick={getChild}
-                          disabled={loadings}
-                        /> 
-                )}
+                {subordinatesp} 
               </Typography>
 
               <Box  
@@ -1135,21 +1211,12 @@ const callAdmin = async () => {
                 }}
               >
 
-              {isConnected && (
-                <Tooltip arrow title="Choose Sponsor with 0 - 20 downline"><span>
-                <Button variant="outlined" size="small" color="primary" onClick={callAdmin} 
-                disabled={loadings}
-                >Check Health</Button> </span></Tooltip> 
-              )}
-
+    
               {isConnected && loadings && ( 
                 <CircularProgress color="primary" size={20} />
               )}
 
-              {!isConnected && (
-                <Tooltip arrow title="Please Connect Wallet"><span>
-                <Button variant="outlined" size="small" color="primary" onClick={callAdmin} disabled>Check Health</Button> 
-                </span></Tooltip>  )}
+    
                 </Box>
 
                 <Box
@@ -1161,6 +1228,9 @@ const callAdmin = async () => {
                 {warnmsgg && (<Button  size="small"  variant="outlined" color="warning" style={{textAlign: 'left'}}
                 onClick={() => setWarnmsgg(null)} >{warnmsgg}</Button>)}
                 
+                
+                {errormsgsp && (<Button  size="small"  variant="outlined" color="success" style={{textAlign: 'left'}}
+                onClick={() => setErrormsgsp(null)} >{errormsgsp}</Button>)}
 
 
                 </CardContent>
@@ -1178,20 +1248,6 @@ const callAdmin = async () => {
         justifyContent="space-between"
       ></Box>
 
-{/* <Grid container spacing={3}> */}
-
-{/* <Grid xs={12} sm={6} md={3} item> */}
-     
-          {cartItems.map((item) => (
-          
-          <Button variant="outlined" size="small" key={item.id} onClick={(e) => setSponaddress(item.value)}>
-          {item.value}
-          </Button> 
-            // <Text key={item.id}> {item.value}</Text>
-          ))}
-  
-  {/* </Grid> */}
-  {/* </Grid> */}
     </>
   );
 }

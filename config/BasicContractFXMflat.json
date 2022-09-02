@@ -192,6 +192,40 @@
       "constant": true
     },
     {
+      "inputs": [],
+      "name": "getSponsor",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -439,6 +473,11 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -450,11 +489,6 @@
         {
           "internalType": "uint256",
           "name": "_minSpinAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_amountToBuy",
           "type": "uint256"
         },
         {

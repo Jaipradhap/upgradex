@@ -19,9 +19,6 @@ import Web3 from 'web3';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 
 import TeamOverview from 'src/content/Dashboards/Tasks/TeamOverview';
-import TasksAnalytics from 'src/content/Dashboards/Tasks/TasksAnalytics';
-import Performance from 'src/content/Dashboards/Tasks/Performance';
-import Projects from 'src/content/Dashboards/Tasks/Projects';
 import Checklist from 'src/content/Dashboards/Tasks/Checklist';
 import Profile from 'src/content/Dashboards/Tasks/Profile';
 import TaskSearch from 'src/content/Dashboards/Tasks/TaskSearch';

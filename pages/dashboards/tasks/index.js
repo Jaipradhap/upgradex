@@ -81,7 +81,7 @@ function DashboardTasks() {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Shortest Upline
+                  Shortest Upline: Only 2 Upline , 20 downline
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   User buy FastX Token using MATIC Amount and it get distributed to 
@@ -113,27 +113,7 @@ function DashboardTasks() {
                     <Typography>Longest Upline Distribution Illustration</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    {/* <Typography>
-                      
-                      
-                    </Typography>
 
-
-                    <Box
-                          sx={{
-                            pt: 1
-                          }}
-                        ></Box>
-
-                    <Avatar
-                    variant={"rounded"}
-                    sx={{
-                      width: 892,
-                      height: 967
-                    }}
-                   
-                    src="https://rabbiteggsdefi.github.io/maticguide/images/FastXLevel25.png"
-                  /> */}
                
                <Card sx={{ maxWidth: 500 }}>
               <CardMedia
@@ -144,7 +124,7 @@ function DashboardTasks() {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Longest Upline
+                  Longest Upline: Only 25 Upline , 20 downline
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   User buy FastX Token using MATIC Amount and it get distributed to 
