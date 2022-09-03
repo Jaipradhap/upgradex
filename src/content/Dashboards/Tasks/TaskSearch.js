@@ -4,6 +4,7 @@ import {
   Card,
   Grid,
   Box,
+  Link,
   IconButton,
   CardContent,
   Typography,
@@ -38,7 +39,7 @@ import Text from 'src/components/Text';
 import Web3 from "web3";
 
 import SimpleStorageContract from "config/BasicContractFXMflat.json";
-import { CONTADDRESS,TXNURL,TOKENADDRESS,REFURL } from 'config/configct';
+import { CONTADDRESS,TXNURL,TOKENADDRESS,REFURL,FXSPONSOR,DSTATECT } from 'config/configct';
 
 const OutlinedInputWrapper = styled(OutlinedInput)(
   ({ theme }) => `
@@ -640,7 +641,7 @@ const callAdmin = async (sponaddress) => {
               > </Box>
 
 
-              {isConnected && loadingsch && (
+              {loadingsch && (
                 <Button variant="outlined" size="small" color="primary" onClick={callSponsor} 
                 disabled={loadingfind}  endIcon={<SearchTwoToneIcon fontSize="small" />}
                 >Find Sponsor Address</Button>
@@ -699,6 +700,40 @@ const callAdmin = async (sponaddress) => {
             <Breadcrumbs separator="›" aria-label="breadcrumb">
                   {breadcrumbs}
                 </Breadcrumbs>
+
+                <Box
+                sx={{
+                  pt: 2
+                }}
+              > </Box>
+
+                <Typography>Copy the fastx
+                {' '}
+                     <Chip
+                          sx={{
+                            mr: 0.5
+                          }}
+                          variant="outlined"
+                          size="small"
+                          label="sponsor"
+                          color="primary"
+                          onClick={(e) => { setSponaddress(FXSPONSOR); addressRef.current.focus(); callAdmin(FXSPONSOR); } }
+                        /> 
+                       and check health.Then proceed to buy token.
+                  
+                   </Typography>
+
+                   <Box
+                sx={{
+                  pt: 2
+                }}
+              > </Box>
+                <Typography>For Deep Dive on sponsor finding, please check the { ' '}
+                <Link
+            href={DSTATECT}
+            target="_blank"
+            rel="noopener noreferrer"
+          >Contract </Link> BuyPack Transactions </Typography>
 
                   </AccordionDetails>
                 </Accordion>

@@ -1,5 +1,6 @@
 export const CONTADDRESS = '0x07311F4e158F1e29FF5e1dFf61256501591EE1F3'; // Contract Address
 export const TOKENADDRESS = '0x28F849a7800a5BD3f6416Dd13C0AcCaCDC7Cf840'; // FASTX Token
+export const FXSPONSOR = '0xC5AD7CEEF9AF83FB8A4F796BdddA90CC6FB97222';
 // export const TXNURL = 'https://polygonscan.com/tx/';
 export const TXNURL = 'https://mumbai.polygonscan.com/tx/';
 export const REFURL = 'http://fastxmatic.com/?ref=';
